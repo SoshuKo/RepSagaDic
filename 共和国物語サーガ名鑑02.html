@@ -1,0 +1,4172 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <title>『共和国物語』サーガ 登場人物名鑑</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --fox: #F09000;   /* 狐色アクセント */
+      --bg: #ffffff;
+      --text-main: #222222;
+      --text-sub: #555555;
+      --border-soft: #e5e5e5;
+      --chip-bg: #fff3e0;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        "Hiragino Sans", "Noto Sans JP", sans-serif;
+      background-color: var(--bg);
+      color: var(--text-main);
+      line-height: 1.6;
+    }
+
+    .site-header {
+      border-bottom: 3px solid var(--fox);
+      padding: 1.6rem 1.2rem 1.2rem;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    .site-title {
+      margin: 0;
+      font-size: 1.6rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+    }
+
+    .site-subtitle {
+      margin: 0.3rem 0 0;
+      font-size: 0.9rem;
+      color: var(--text-sub);
+    }
+
+    main {
+      max-width: 960px;
+      padding: 1.2rem;
+      margin: 0 auto 2rem;
+    }
+
+    /* コントロールエリア（検索など） */
+    .controls {
+      margin-bottom: 1rem;
+      padding: 1rem 1.1rem;
+      border-radius: 0.8rem;
+      border: 1px solid var(--border-soft);
+      background: #fffdf9;
+    }
+
+    .controls-label-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 0.5rem;
+      margin-bottom: 0.4rem;
+      flex-wrap: wrap;
+    }
+
+    .controls-label-row label {
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+
+    .result-count {
+      font-size: 0.8rem;
+      color: var(--text-sub);
+    }
+
+    #searchInput {
+      width: 100%;
+      padding: 0.55rem 0.75rem;
+      border-radius: 999px;
+      border: 1px solid var(--border-soft);
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    #searchInput:focus {
+      border-color: var(--fox);
+      box-shadow: 0 0 0 2px rgba(240, 144, 0, 0.2);
+    }
+
+    .controls-hint {
+      margin-top: 0.35rem;
+      font-size: 0.8rem;
+      color: var(--text-sub);
+    }
+
+    /* カード一覧 */
+    .cards-section {
+      margin-top: 1.2rem;
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 0.9rem;
+    }
+
+    .char-card {
+      position: relative;
+      border-radius: 0.9rem;
+      border: 1px solid var(--border-soft);
+      background: #ffffff;
+      padding: 0.85rem 0.9rem 0.9rem;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+
+    .char-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      border: 1px solid rgba(240, 144, 0, 0.12);
+      pointer-events: none;
+    }
+
+    .char-card[hidden] {
+    display: none !important;
+    }
+
+    .char-name {
+      margin: 0;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .char-name-sub {
+      font-size: 0.75rem;
+      color: var(--text-sub);
+      margin-left: 0.25rem;
+    }
+
+    .kv-row {
+      font-size: 0.82rem;
+      color: var(--text-sub);
+      display: flex;
+      align-items: baseline;
+      gap: 0.3rem;
+      flex-wrap: wrap;
+    }
+
+    .kv-label {
+      font-weight: 600;
+      font-size: 0.78rem;
+      color: var(--fox);
+      padding: 0.05rem 0.45rem;
+      border-radius: 999px;
+      border: 1px solid rgba(240, 144, 0, 0.3);
+      background: #fffaf4;
+      flex-shrink: 0;
+    }
+
+    .kv-value {
+      font-size: 0.8rem;
+      color: var(--text-main);
+    }
+
+    .char-tags {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      flex-wrap: wrap;
+    }
+
+    .tag-pill {
+      border-radius: 999px;
+      border: 1px solid rgba(240, 144, 0, 0.45);
+      background: var(--chip-bg);
+      padding: 0.05rem 0.6rem;
+      font-size: 0.75rem;
+      cursor: pointer;
+      line-height: 1.4;
+      transition: background 0.12s ease, transform 0.05s ease, box-shadow 0.12s ease;
+      white-space: nowrap;
+    }
+
+    .tag-pill:hover {
+      background: #ffe0b2;
+      transform: translateY(-1px);
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.09);
+    }
+
+    .tag-pill:active {
+      transform: translateY(0);
+      box-shadow: none;
+    }
+
+    .char-summary,
+    .char-quote,
+    .char-oshii {
+      font-size: 0.8rem;
+    }
+
+    .quote-text {
+      font-style: italic;
+    }
+
+    .quote-mark {
+      color: var(--fox);
+      font-weight: 600;
+      margin: 0 0.08rem;
+    }
+
+    .no-results {
+      margin-top: 1.5rem;
+      font-size: 0.88rem;
+      color: var(--text-sub);
+      text-align: center;
+    }
+
+    footer {
+      max-width: 960px;
+      margin: 0 auto 2.4rem;
+      padding: 0 1.2rem;
+      font-size: 0.75rem;
+      color: var(--text-sub);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      body {
+        background: #111111;
+        color: #f5f5f5;
+      }
+      .site-header {
+        border-bottom-color: var(--fox);
+      }
+      .controls {
+        background: #1b1b1b;
+        border-color: #333333;
+      }
+      #searchInput {
+        background: #111111;
+        border-color: #444444;
+        color: #f5f5f5;
+      }
+      .char-card {
+        background: #181818;
+        border-color: #333333;
+      }
+      .char-card::before {
+        border-color: rgba(240, 144, 0, 0.35);
+      }
+      .kv-label {
+        background: rgba(240, 144, 0, 0.15);
+        border-color: rgba(240, 144, 0, 0.8);
+      }
+      .tag-pill {
+        background: rgba(240, 144, 0, 0.16);
+      }
+      .tag-pill:hover {
+        background: rgba(240, 144, 0, 0.35);
+      }
+      footer {
+        color: #aaaaaa;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <h1 class="site-title">『共和国物語』サーガ 登場人物名鑑</h1>
+    <p class="site-subtitle">
+      人物名・登場作品・タグ・名言などから検索できる、ファン向けデータベース 🦊
+    </p>
+  </header>
+
+  <main>
+    <!-- 🔍 検索ボックス -->
+    <section class="controls" aria-label="検索と絞り込み">
+      <div class="controls-label-row">
+        <label for="searchInput">キーワード検索</label>
+        <div class="result-count">
+          <span id="visibleCount">0</span> / <span id="totalCount">0</span> キャラクター
+        </div>
+      </div>
+      <input
+        type="search"
+        id="searchInput"
+        placeholder="例：パラジェイ / アカネイ / 九地 / 1963 など"
+        autocomplete="off"
+      />
+      <p class="controls-hint">
+        ※ 人物名・登場作品・タグ・概要・名言・推しポイントをまとめて検索します。タグをクリックすると、そのタグで検索されます。
+      </p>
+    </section>
+
+    <!-- 🧾 カード一覧本体 -->
+    <section class="cards-section" aria-live="polite">
+      <p id="noResults" class="no-results" hidden>
+        該当するキャラクターが見つかりませんでした…検索キーワードを変えてみてください。
+      </p>
+
+      <div id="cardGrid" class="card-grid">
+
+        <!-- ==================== K-EP1～K-EP2 ==================== -->
+
+        <!-- ▼ シャウン・パラジェイ -->
+        <article
+          class="char-card"
+          data-name="シャウン・パラジェイ"
+          data-works="K-EP1, K-EP2"
+          data-tags="キナイニ,第一教導職,剛直の構え"
+        >
+          <h2 class="char-name">
+            シャウン・パラジェイ
+            <span class="char-name-sub">（建国の父 / 天命の子）</span>
+          </h2>
+          <p class="kv-row">
+            <span class="kv-label">登場作品</span>
+            <span class="kv-value">カラバァタン共和国物語 K-EP1～K-EP2</span>
+          </p>
+          <div class="char-tags kv-row">
+            <span class="kv-label">タグ</span>
+            <div class="kv-value">
+              <button class="tag-pill" type="button" data-tag="キナイニ">キナイニ</button>
+              <button class="tag-pill" type="button" data-tag="第一教導職">第一教導職</button>
+              <button class="tag-pill" type="button" data-tag="剛直の構え">剛直の構え</button>
+            </div>
+          </div>
+          <p class="char-summary">
+            <span class="kv-label">概要</span>
+            <span class="kv-value">
+              1899年生まれ。教導国建国の「天命の子」。カイン・カナの下で共和主義者として育つも、エシェとの悲恋やハサネイとの邂逅を経て「力なき優しさは無意味」と悟る。パレイの遺志を継ぎ、親友キナベイを討って（K-EP1）教導国を建国。剛直の構えの使い手。K-EP2にてライと和解しかけた瞬間に息子アヤの手で暗殺される。
+            </span>
+          </p>
+          <p class="char-quote">
+            <span class="kv-label">名言</span>
+            <span class="kv-value">
+              <span class="quote-mark">「</span>
+              <span class="quote-text">もう迷わない、強いカラベイをわたしが選びます</span>
+              <span class="quote-mark">」</span>
+            </span>
+          </p>
+          <p class="char-oshii">
+            <span class="kv-label">推しポイント</span>
+            <span class="kv-value">
+              ・あまりにも切ないダークヒーロー😭 エシェを救えなかった無力感が彼を「選択」の修羅へと変えた過程が辛すぎる…<br />
+              ・キナベイとの「転向の橋」での決別シーンは涙なしには見られない。互いに想い合っているのに斬り合わなきゃいけない運命の残酷さよ…尊い…†<br />
+              ・最期に息子アヤの裏切りを悟りつつも「見事だ」と言い残す親心、あまりにもパラジェイらしい最期で最高にカッコいいです✨
+            </span>
+          </p>
+        </article>
+
+        <!-- ▼ ラデン・キナベイ -->
+        <article
+          class="char-card"
+          data-name="ラデン・キナベイ"
+          data-works="K-EP0, K-EP1, K-EP2"
+          data-tags="キナイニ,純白のナイフ,柔和の構え,無心の構え"
+        >
+          <h2 class="char-name">
+            ラデン・キナベイ
+            <span class="char-name-sub">（パラジェイの親友 / 伝説の剣客）</span>
+          </h2>
+          <p class="kv-row">
+            <span class="kv-label">登場作品</span>
+            <span class="kv-value">カラバァタン共和国物語 K-EP0～K-EP2</span>
+          </p>
+          <div class="char-tags kv-row">
+            <span class="kv-label">タグ</span>
+            <div class="kv-value">
+              <button class="tag-pill" type="button" data-tag="キナイニ">キナイニ</button>
+              <button class="tag-pill" type="button" data-tag="純白のナイフ">純白のナイフ</button>
+              <button class="tag-pill" type="button" data-tag="柔和の構え">柔和の構え</button>
+              <button class="tag-pill" type="button" data-tag="無心の構え">無心の構え</button>
+            </div>
+          </div>
+          <p class="char-summary">
+            <span class="kv-label">概要</span>
+            <span class="kv-value">
+              パラジェイの義兄弟にして最大の理解者。K-EP0の列車ジャック事件で見せた機転と「柔和の構え」は伝説。K-EP1でパラジェイを止めようとして橋から転落するも生存。K-EP2にて、ライを逃すためにパラジェイの前に立ちはだかり、今度こそ命を燃やし尽くす。
+            </span>
+          </p>
+          <p class="char-quote">
+            <span class="kv-label">名言</span>
+            <span class="kv-value">
+              <span class="quote-mark">「</span>
+              <span class="quote-text">未来で待っている</span>
+              <span class="quote-mark">」</span>
+            </span>
+          </p>
+          <p class="char-oshii">
+            <span class="kv-label">推しポイント</span>
+            <span class="kv-value">
+              ・スパダリ力がカンストしてる。パラジェイの暴走を止めつつ、エシェのことも気にかける優しさの塊。<br />
+              ・K-EP2での再登場シーンが激アツすぎる🔥 「ここにいる」って登場して、かつての友であり宿敵であるパラジェイに対して、攻撃せず「いなす」だけで時間を稼ぐその姿…愛おしさと切なさで胸が張り裂けそう😭<br />
+              ・「未来で待っている」という言葉が、後のライやHシリーズの「西アルトス研究会」にまで繋がっていくのがエモの極み。
+            </span>
+          </p>
+        </article>
+
+        <!-- ▼ ラカン・ライ -->
+        <article
+          class="char-card"
+          data-name="ラカン・ライ"
+          data-works="K-EP2, K-EP3, K-EP4"
+          data-tags="反乱同盟,純白のナイフ,中庸の構え"
+        >
+          <h2 class="char-name">
+            ラカン・ライ
+            <span class="char-name-sub">（二代目キナベイ / 法議会議長）</span>
+          </h2>
+          <p class="kv-row">
+            <span class="kv-label">登場作品</span>
+            <span class="kv-value">カラバァタン共和国物語 K-EP2～K-EP4</span>
+          </p>
+          <div class="char-tags kv-row">
+            <span class="kv-label">タグ</span>
+            <div class="kv-value">
+              <button class="tag-pill" type="button" data-tag="反乱同盟">反乱同盟</button>
+              <button class="tag-pill" type="button" data-tag="純白のナイフ">純白のナイフ</button>
+              <button class="tag-pill" type="button" data-tag="中庸の構え">中庸の構え</button>
+            </div>
+          </div>
+          <p class="char-summary">
+            <span class="kv-label">概要</span>
+            <span class="kv-value">
+              ビライタン市出身の庶民。家族を九地に奪われ、キナベイに師事して「話し合い」の大切さを学ぶ。K-EP2でパラジェイに挑むも敗北、キナベイに救われる。その後、アカネイ（本物）と共に「反乱同盟」を結成。K-EP4にてアヤを打倒し、戦後は法議会議長として「選択」と「話し合い」の狭間で国を支え続けた。
+            </span>
+          </p>
+          <p class="char-quote">
+            <span class="kv-label">名言</span>
+            <span class="kv-value">
+              <span class="quote-mark">「</span>
+              <span class="quote-text">これからできるんだ、未来で待ってる、その人を</span>
+              <span class="quote-mark">」</span>
+            </span>
+          </p>
+          <p class="char-oshii">
+            <span class="kv-label">推しポイント</span>
+            <span class="kv-value">
+              ・キナベイの意志を継ぐ者！！「純白のナイフ」を受け継ぎ、血塗られた復讐ではなく「話し合い」を選ぶ成長物語が最高に泣ける😭<br />
+              ・K-EP4の決戦で、アカネイとの連携で「中庸の構え」を完成させるシーンは鳥肌モノ⚡<br />
+              ・息子のサイや孫のファタ（H-EP1）にまでその意志が受け継がれているのが尊い…血の繋がりを超えた「キナベイ」の魂の継承者✨
+            </span>
+          </p>
+        </article>
+
+        <!-- ▼ カイン・カナ -->
+        <article
+          class="char-card"
+          data-name="カイン・カナ"
+          data-works="K-EP0, K-EP1"
+          data-tags="キナイニ,純白のナイフ"
+        >
+          <h2 class="char-name">
+            カイン・カナ
+            <span class="char-name-sub">（パラジェイとキナベイの師 / 第三代大統領）</span>
+          </h2>
+          <p class="kv-row">
+            <span class="kv-label">登場作品</span>
+            <span class="kv-value">カラバァタン共和国物語 K-EP0～K-EP1</span>
+          </p>
+          <div class="char-tags kv-row">
+            <span class="kv-label">タグ</span>
+            <div class="kv-value">
+              <button class="tag-pill" type="button" data-tag="キナイニ">キナイニ</button>
+              <button class="tag-pill" type="button" data-tag="純白のナイフ">純白のナイフ</button>
+            </div>
+          </div>
+          <p class="char-summary">
+            <span class="kv-label">概要</span>
+            <span class="kv-value">
+              デューレイ師範にして元大統領。パラジェイの育ての親。型破りな性格で、パラジェイが共和国の洗脳に染まらぬよう、優しさと広い知識を教えた。K-EP0では列車ジャック事件で見事な機転を見せる。K-EP1にて九地により暗殺されるが、彼の教えは弟子たちの中に生き続けた。
+            </span>
+          </p>
+          <p class="char-quote">
+            <span class="kv-label">名言</span>
+            <span class="kv-value">
+              <span class="quote-mark">「</span>
+              <span class="quote-text">素晴らしいリアクションだ</span>
+              <span class="quote-mark">」</span>
+            </span>
+          </p>
+          <p class="char-oshii">
+            <span class="kv-label">推しポイント</span>
+            <span class="kv-value">
+              ・理想の師匠枠！K-EP0でのキナベイとの阿吽の呼吸による「同士討ち演技」は必見。ユーモアと実力を兼ね備えたナイスミドル✨<br />
+              ・パラジェイに生き物を慈しむ心を教えたことが、逆にパラジェイの苦悩の根源になってしまうという皮肉…それでも彼が蒔いた種がなければ、後の「話し合い」の未来はなかったはず🌱
+            </span>
+          </p>
+        </article>
+
+        <!-- ▼ エシェ -->
+        <article
+          class="char-card"
+          data-name="エシェ"
+          data-works="K-EP1"
+          data-tags="市民"
+        >
+          <h2 class="char-name">
+            エシェ
+            <span class="char-name-sub">（ライテイキ村の娘）</span>
+          </h2>
+          <p class="kv-row">
+            <span class="kv-label">登場作品</span>
+            <span class="kv-value">カラバァタン共和国物語 K-EP1</span>
+          </p>
+          <div class="char-tags kv-row">
+            <span class="kv-label">タグ</span>
+            <div class="kv-value">
+              <button class="tag-pill" type="button" data-tag="市民">市民</button>
+            </div>
+          </div>
+          <p class="char-summary">
+            <span class="kv-label">概要</span>
+            <span class="kv-value">
+              ゾルアー市ライテイキ村出身。パラジェイの初恋の人。村の因習（夜這い）の犠牲になるも、村への恩義からパラジェイの「駆け落ち」の提案を拒絶し、村に残ることを選んだ。彼女の存在と選択が、パラジェイに「力なき正義の限界」を痛感させ、彼を覇道へと走らせる決定的な引き金となった。
+            </span>
+          </p>
+          <p class="char-quote">
+            <span class="kv-label">名言</span>
+            <span class="kv-value">
+              <span class="quote-mark">「</span>
+              <span class="quote-text">貴方は天命の子、わたしは貧しい村娘。それに、わたしは、わたしを育ててくれた親族や村に恩返しがしたい</span>
+              <span class="quote-mark">」</span>
+            </span>
+          </p>
+          <p class="char-oshii">
+            <span class="kv-label">推しポイント</span>
+            <span class="kv-value">
+              ・パラジェイの人生を狂わせた（決定づけた）運命の女性…！彼女がただの「守られるヒロイン」ではなく、自分の意思で過酷な現実（村での生活）を選び取ったという点が、パラジェイにとってはあまりに辛い現実だった…😭<br />
+              ・後にキナベイが「彼女は幸せに過ごしていた」と語るが、それが真実か優しい嘘かは誰にもわからない…永遠の謎。
+            </span>
+          </p>
+        </article>
+
+        <!-- ▼ シャウン・パレイ -->
+        <article
+          class="char-card"
+          data-name="シャウン・パレイ"
+          data-works="K-EP0, K-EP1"
+          data-tags="九地,白梟,中庸の構え〈真〉"
+        >
+          <h2 class="char-name">
+            シャウン・パレイ
+            <span class="char-name-sub">（イスミズラーク同盟党首 / 初代白梟）</span>
+          </h2>
+          <p class="kv-row">
+            <span class="kv-label">登場作品</span>
+            <span class="kv-value">カラバァタン共和国物語 K-EP0～K-EP1</span>
+          </p>
+          <div class="char-tags kv-row">
+            <span class="kv-label">タグ</span>
+            <div class="kv-value">
+              <button class="tag-pill" type="button" data-tag="九地">九地</button>
+              <button class="tag-pill" type="button" data-tag="白梟">白梟</button>
+              <button class="tag-pill" type="button" data-tag="中庸の構え〈真〉">中庸の構え〈真〉</button>
+            </div>
+          </div>
+          <p class="char-summary">
+            <span class="kv-label">概要</span>
+            <span class="kv-value">
+              イスミズラーク同盟の党首にして、共和国大統領。その正体は九地の指導者「白梟」。パラジェイに「選択」の重要性を説き、彼を教導国の指導者へと導くために暗躍した黒幕。K-EP0では若き日のハサネイを救い、K-EP1では自らの命を「贄」として捧げ、パラジェイに後を託した。圧倒的な剣技「中庸の構え〈真〉」を持つ。
+            </span>
+          </p>
+          <p class="char-quote">
+            <span class="kv-label">名言</span>
+            <span class="kv-value">
+              <span class="quote-mark">「</span>
+              <span class="quote-text">わたしを殺したければそうすればいい。きみの選択に幸あれ</span>
+              <span class="quote-mark">」</span>
+            </span>
+          </p>
+          <p class="char-oshii">
+            <span class="kv-label">推しポイント</span>
+            <span class="kv-value">
+              ・圧倒的カリスマ悪役！！自分の命すら計画の一部として使い捨てる狂気が最高に痺れる…😈<br />
+              ・K-EP0でのワライとの戦闘シーンで見せた無双っぷりがヤバい。政治家としても剣士としても最強クラスとか、ラスボスとしての格が高すぎる。<br />
+              ・彼がパラジェイにかけた「呪い（選択に幸あれ）」が、後のシリーズまでずっと響いていくのが業が深い…
+            </span>
+          </p>
+        </article>
+
+        <!-- ▼ レイ -->
+        <article
+          class="char-card"
+          data-name="レイ"
+          data-works="K-EP0, K-EP1, K-EP2, K-EP3"
+          data-tags="九地"
+        >
+          <h2 class="char-name">
+            レイ
+            <span class="char-name-sub">（パラジェイの秘書 / アカネイとアヤの母）</span>
+          </h2>
+          <p class="kv-row">
+            <span class="kv-label">登場作品</span>
+            <span class="kv-value">カラバァタン共和国物語 K-EP0～K-EP3</span>
+          </p>
+          <div class="char-tags kv-row">
+            <span class="kv-label">タグ</span>
+            <div class="kv-value">
+              <button class="tag-pill" type="button" data-tag="九地">九地</button>
+            </div>
+          </div>
+          <p class="char-summary">
+            <span class="kv-label">概要</span>
+            <span class="kv-value">
+              パラジェイの秘書官にして九地のスパイ。パラジェイを「天命の子」として狂信的に崇拝し、彼との間に双子（アカネイ・アヤ）をもうける。K-EP1ではパラジェイの覚醒を促し、K-EP2では息子アヤと共にクーデターを起こし、パラジェイを殺害させる。K-EP3にて、アヤに切り捨てられるという因果応報の最期を迎える。
+            </span>
+          </p>
+          <p class="char-quote">
+            <span class="kv-label">名言</span>
+            <span class="kv-value">
+              <span class="quote-mark">「</span>
+              <span class="quote-text">わたしはあなたを永遠に愛しています、『天命の子』</span>
+              <span class="quote-mark">」</span>
+            </span>
+          </p>
+          <p class="char-oshii">
+            <span class="kv-label">推しポイント</span>
+            <span class="kv-value">
+              ・ヤンデレの極致💀 愛する人を神格化しすぎて、その人を殺してでも「天命」を完遂させようとする歪んだ愛情が怖いけど魅力的。<br />
+              ・K-EP0で若きハサネイを拷問するシーンの冷酷さと、パラジェイに見せる顔のギャップが凄い。ある意味で共和国シリーズ最大の毒婦かも。
+            </span>
+          </p>
+        </article>
+
+        <!-- ▼ アハレン・ハサネイ -->
+        <article
+          class="char-card"
+          data-name="アハレン・ハサネイ"
+          data-works="K-EP0, K-EP1"
+          data-tags="キナイニ,九地,影梟,狂暴の構え"
+        >
+          <h2 class="char-name">
+            アハレン・ハサネイ
+            <span class="char-name-sub">（影梟 / カナの師匠）</span>
+          </h2>
+          <p class="kv-row">
+            <span class="kv-label">登場作品</span>
+            <span class="kv-value">カラバァタン共和国物語 K-EP0～K-EP1</span>
+          </p>
+          <div class="char-tags kv-row">
+            <span class="kv-label">タグ</span>
+            <div class="kv-value">
+              <button class="tag-pill" type="button" data-tag="キナイニ">キナイニ</button>
+              <button class="tag-pill" type="button" data-tag="九地">九地</button>
+              <button class="tag-pill" type="button" data-tag="影梟">影梟</button>
+              <button class="tag-pill" type="button" data-tag="狂暴の構え">狂暴の構え</button>
+            </div>
+          </div>
+          <p class="char-summary">
+            <span class="kv-label">概要</span>
+            <span class="kv-value">
+              元キナイニの師範で、カイン・カナの師匠。弟子を権力闘争で失い、共和国に絶望して九地へ転向、「影梟」となる。K-EP1では圧倒的な強さでパラジェイとキナベイを圧倒し、パラジェイに共和国の腐敗を突きつけた。最期は二人の連携の前に敗れ、自害。
+            </span>
+          </p>
+          <p class="char-quote">
+            <span class="kv-label">名言</span>
+            <span class="kv-value">
+              <span class="quote-mark">「</span>
+              <span class="quote-text">それでもわたしは貴方を肯定する</span>
+              <span class="quote-mark">」</span>
+            </span>
+          </p>
+          <p class="char-oshii">
+            <span class="kv-label">推しポイント</span>
+            <span class="kv-value">
+              ・悲しき復讐鬼…😢 K-EP0での過去編を知ると、彼がなぜ「影梟」になったのか、その絶望の深さに胸が痛む。<br />
+              ・敵でありながら、パラジェイの見てきた景色に共感し、彼を肯定するという複雑な立ち位置がエモい。彼の死が、後の「ハサネイ派」を生み、ライたちの共闘に繋がると思うと感慨深い。
+            </span>
+          </p>
+        </article>
+
+        <!-- ==================== K-EP3～K-EP4 ==================== -->
+
+        <!-- ▼ シャウン・アヤ -->
+        <article
+          class="char-card"
+          data-name="シャウン・アヤ"
+          data-works="K-EP2, K-EP3, K-EP4, K-EP6, EPW"
+          data-tags="九地,第一教導職,影梟"
+        >
+          <h2 class="char-name">
+            シャウン・アヤ
+            <span class="char-name-sub">（偽アカネイ / 第二代第一教導職）</span>
+          </h2>
+          <p class="kv-row">
+            <span class="kv-label">登場作品</span>
+            <span class="kv-value">カラバァタン共和国物語 K-EP2～EPW</span>
+          </p>
+          <div class="char-tags kv-row">
+            <span class="kv-label">タグ</span>
+            <div class="kv-value">
+              <button class="tag-pill" type="button" data-tag="九地">九地</button>
+              <button class="tag-pill" type="button" data-tag="第一教導職">第一教導職</button>
+              <button class="tag-pill" type="button" data-tag="影梟">影梟</button>
+            </div>
+          </div>
+          <p class="char-summary">
+            <span class="kv-label">概要</span>
+            <span class="kv-value">
+              パラジェイの息子で、アカネイの双子の兄弟。生まれつき病弱だったが、薬物投与と父の教育により強靭な肉体と知性を手に入れる。K-EP2で父を殺害し、「ビライン・アカネイ」になりすまして第一教導職に就任。冷徹な「選択」で国を導くが、K-EP4でライと本物のアカネイに敗れる。
+            </span>
+          </p>
+          <p class="char-quote">
+            <span class="kv-label">名言</span>
+            <span class="kv-value">
+              <span class="quote-mark">「</span>
+              <span class="quote-text">より優しくあるのであれば、より強く</span>
+              <span class="quote-mark">」</span>
+            </span>
+          </p>
+          <p class="char-oshii">
+            <span class="kv-label">推しポイント</span>
+            <span class="kv-value">
+              ・父パラジェイの「力なき優しさは無意味」という教えを歪んだ形で体現した悲劇の独裁者。<br />
+              ・K-EP4での最終決戦、薬物で強化された肉体と「孤独な為政者」としての矜持がぶつかり合うシーンは圧巻💥<br />
+              ・娘（息子として育てた）アカウへの不器用な愛情や、K-EP6での静かな最期など、晩年の哀愁がたまらない…
+            </span>
+          </p>
+        </article>
+
+        <!-- ▼ ビライン・アカネイ -->
+        <article
+          class="char-card"
+          data-name="ビライン・アカネイ"
+          data-works="K-EP3, K-EP4, K-EP5, K-EP6"
+          data-tags="反乱同盟,深紅のナイフ,狂暴の構え"
+        >
+          <h2 class="char-name">
+            ビライン・アカネイ
+            <span class="char-name-sub">（本物のアカネイ / セラン直轄司教）</span>
+          </h2>
+          <p class="kv-row">
+            <span class="kv-label">登場作品</span>
+            <span class="kv-value">カラバァタン共和国物語 K-EP3～K-EP6</span>
+          </p>
+          <div class="char-tags kv-row">
+            <span class="kv-label">タグ</span>
+            <div class="kv-value">
+              <button class="tag-pill" type="button" data-tag="反乱同盟">反乱同盟</button>
+              <button class="tag-pill" type="button" data-tag="深紅のナイフ">深紅のナイフ</button>
+              <button class="tag-pill" type="button" data-tag="狂暴の構え">狂暴の構え</button>
+            </div>
+          </div>
+          <p class="char-summary">
+            <span class="kv-label">概要</span>
+            <span class="kv-value">
+              パラジェイの息子。ビライン家に養子に出され、自身の出自を知らずに育つ。K-EP3で九地に義妹ネイを殺され、復讐を誓う。「反乱同盟」を結成し、ライと共にアヤ（偽アカネイ）と対峙。パラジェイ譲りの剛力「狂暴の構え」と、両親から託された「深紅のナイフ」を振るう。戦後は「カウ」として司教の道へ。
+            </span>
+          </p>
+          <p class="char-quote">
+            <span class="kv-label">名言</span>
+            <span class="kv-value">
+              <span class="quote-mark">「</span>
+              <span class="quote-text">お前みたいなやつが母親なわけあるか！</span>
+              <span class="quote-mark">」</span>
+            </span>
+          </p>
+          <p class="char-oshii">
+            <span class="kv-label">推しポイント</span>
+            <span class="kv-value">
+              ・熱血漢！！理論派のライとは対照的に、感情で動くタイプだが、そこがいい✨ ネイを想う優しさと、悪を許せぬ正義感が眩しい。<br />
+              ・K-EP4でライと共闘し、兄弟であるアヤを倒す場面はシリーズ屈指の名バトル！<br />
+              ・K-EP6でタネイと神前試合を行うシーン、老いてもなお衰えぬ気迫と、ライへの想いが泣ける…😭
+            </span>
+          </p>
+        </article>
+
+        <!-- ▼ ネイ -->
+        <article
+          class="char-card"
+          data-name="ネイ"
+          data-works="K-EP3"
+          data-tags="市民"
+        >
+          <h2 class="char-name">
+            ネイ
+            <span class="char-name-sub">（アカネイの義妹）</span>
+          </h2>
+          <p class="kv-row">
+            <span class="kv-label">登場作品</span>
+            <span class="kv-value">カラバァタン共和国物語 K-EP3</span>
+          </p>
+          <div class="char-tags kv-row">
+            <span class="kv-label">タグ</span>
+            <div class="kv-value">
+              <button class="tag-pill" type="button" data-tag="市民">市民</button>
+            </div>
+          </div>
+          <p class="char-summary">
+            <span class="kv-label">概要</span>
+            <span class="kv-value">
+              ビライン家の子女。アカネイの義理の妹。K-EP3にて、九地によるクーデターの犠牲となり、重傷を負いながらもアカネイに逃げるよう伝え、命を落とす。彼女の死がアカネイを復讐へと駆り立てる原動力となった。
+            </span>
+          </p>
+          <p class="char-quote">
+            <span class="kv-label">名言</span>
+            <span class="kv-value">
+              <span class="quote-mark">「</span>
+              <span class="quote-text">兄様、お逃げください！</span>
+              <span class="quote-mark">」</span>
+            </span>
+          </p>
+          <p class="char-oshii">
+            <span class="kv-label">推しポイント</span>
+            <span class="kv-value">
+              ・アカネイにとっての「守るべき日常」の象徴。<br />
+              ・彼女がアカネイに渡した（あるいは両親から託された）「もうこれ以上血塗られませんように」というメッセージが刻まれたナイフが、アカネイのアイデンティティになるのが尊い…†
+            </span>
+          </p>
+        </article>
+
+        <!-- ▼ 侍女 -->
+        <article
+          class="char-card"
+          data-name="侍女"
+          data-works="K-EP3"
+          data-tags="市民"
+        >
+          <h2 class="char-name">
+            侍女
+            <span class="char-name-sub">（ビライン家の生き残り）</span>
+          </h2>
+          <p class="kv-row">
+            <span class="kv-label">登場作品</span>
+            <span class="kv-value">カラバァタン共和国物語 K-EP3</span>
+          </p>
+          <div class="char-tags kv-row">
+            <span class="kv-label">タグ</span>
+            <div class="kv-value">
+              <button class="tag-pill" type="button" data-tag="市民">市民</button>
+            </div>
+          </div>
+          <p class="char-summary">
+            <span class="kv-label">概要</span>
+            <span class="kv-value">
+              アカネイに仕えていた侍女。九地に捕まるも、アルモナ大使館でのレイとの対峙の場に連行され、アカネイの出生の秘密を証言する。用済みとしてレイに始末されそうになったところをライに救われる。
+            </span>
+          </p>
+          <p class="char-quote">
+            <span class="kv-label">名言</span>
+            <span class="kv-value">
+              <span class="quote-mark">「</span>
+              <span class="quote-text">それでも、わたしたちはあなたをビライン家の一員だと思っていました</span>
+              <span class="quote-mark">」</span>
+            </span>
+          </p>
+          <p class="char-oshii">
+            <span class="kv-label">推しポイント</span>
+            <span class="kv-value">
+              ・名もなきモブかと思いきや、アカネイのアイデンティティを肯定する重要な役割を果たす聖女✨<br />
+              ・彼女の涙ながらの訴えが、アカネイが「ビライン家のアカネイ」として戦う覚悟を決めるきっかけになった。
+            </span>
+          </p>
+        </article>
+
+        <!-- ▼ イマデン・リア -->
+        <article
+          class="char-card"
+          data-name="イマデン・リア"
+          data-works="K-EP3, K-EP4"
+          data-tags="九地,中庸の構え〈真〉"
+        >
+          <h2 class="char-name">
+            イマデン・リア
+            <span class="char-name-sub">（ハサネイ派指導者 / 伝説の剣豪）</span>
+          </h2>
+          <p class="kv-row">
+            <span class="kv-label">登場作品</span>
+            <span class="kv-value">カラバァタン共和国物語 K-EP3～K-EP4</span>
+          </p>
+          <div class="char-tags kv-row">
+            <span class="kv-label">タグ</span>
+            <div class="kv-value">
+              <button class="tag-pill" type="button" data-tag="九地">九地</button>
+              <button class="tag-pill" type="button" data-tag="中庸の構え〈真〉">中庸の構え〈真〉</button>
+            </div>
+          </div>
+          <p class="char-summary">
+            <span class="kv-label">概要</span>
+            <span class="kv-value">
+              「九地ハサネイ派」のリーダー。仮面の男。ライとアカネイに剣術を指南した師匠。「狂暴」と「無心」を両立させる「中庸の構え〈真〉」の使い手。K-EP4にて、カウ派の襲撃からパテイを庇い、腹部を貫かれる重傷を負う。ネキネイの師匠でもある。
+            </span>
+          </p>
+          <p class="char-quote">
+            <span class="kv-label">名言</span>
+            <span class="kv-value">
+              <span class="quote-mark">「</span>
+              <span class="quote-text">型を破れるのは、型を身につけたものだけだ</span>
+              <span class="quote-mark">」</span>
+            </span>
+          </p>
+          <p class="char-oshii">
+            <span class="kv-label">推しポイント</span>
+            <span class="kv-value">
+              ・渋い！強い！カッコいい！三拍子揃った理想の師匠キャラ⚔️<br />
+              ・K-EP4で、どうしようもないクズであるパテイを「庇って」刺されるシーンの、文句を言いながらも守る漢気が最高。<br />
+              ・彼の教えが、後のネキネイやファタにも受け継がれていく「師弟の系譜」が熱い🔥
+            </span>
+          </p>
+        </article>
+
+        <!-- ▼ サーナ -->
+        <article
+          class="char-card"
+          data-name="サーナ"
+          data-works="K-EP3, K-EP4"
+          data-tags="市民"
+        >
+          <h2 class="char-name">
+            サーナ
+            <span class="char-name-sub">（セラン直轄司教）</span>
+          </h2>
+          <p class="kv-row">
+            <span class="kv-label">登場作品</span>
+            <span class="kv-value">カラバァタン共和国物語 K-EP3～K-EP4</span>
+          </p>
+          <div class="char-tags kv-row">
+            <span class="kv-label">タグ</span>
+            <div class="kv-value">
+              <button class="tag-pill" type="button" data-tag="市民">市民</button>
+            </div>
+          </div>
+          <p class="char-summary">
+            <span class="kv-label">概要</span>
+            <span class="kv-value">
+              セラン直轄教区の司教。リアの幼馴染。リベラリストであり、中央政府と対立しながらも、アカネイやライたち「反乱同盟」を匿い、アルモナとのパイプ役として尽力した。アカネイが「カウ」として身を隠す際も協力した。
+            </span>
+          </p>
+          <p class="char-quote">
+            <span class="kv-label">名言</span>
+            <span class="kv-value">
+              <span class="quote-mark">「</span>
+              <span class="quote-text">いつか来たるアヤの『次の一手』に備えて、いまは司教で熟議を重ねるときだ</span>
+              <span class="quote-mark">」</span>
+            </span>
+          </p>
+          <p class="char-oshii">
+            <span class="kv-label">推しポイント</span>
+            <span class="kv-value">
+              ・武力ではなく知略と人脈で戦う大人。<br />
+              ・彼がいなければ、アカネイたちはとっくにアヤに消されていたはず。縁の下の力持ちポジションが渋い。
+            </span>
+          </p>
+        </article>
+
+        <!-- ▼ ラカン・カウ -->
+        <article
+          class="char-card"
+          data-name="ラカン・カウ"
+          data-works="K-EP3（回想）"
+          data-tags="市民"
+        >
+          <h2 class="char-name">
+            ラカン・カウ
+            <span class="char-name-sub">（ライの実弟）</span>
+          </h2>
+          <p class="kv-row">
+            <span class="kv-label">登場作品</span>
+            <span class="kv-value">カラバァタン共和国物語 K-EP3（回想）</span>
+          </p>
+          <div class="char-tags kv-row">
+            <span class="kv-label">タグ</span>
+            <div class="kv-value">
+              <button class="tag-pill" type="button" data-tag="市民">市民</button>
+            </div>
+          </div>
+          <p class="char-summary">
+            <span class="kv-label">概要</span>
+            <span class="kv-value">
+              ラカン・ライの弟。1910年頃生まれ。学問に秀で、「将来は博士か」と期待されていたが、1925年のビライタン陥落（九地による焼き討ち）の際、家族と共に炎の中に消えた。
+            </span>
+          </p>
+          <p class="char-quote">
+            <span class="kv-label">名言</span>
+            <span class="kv-value">
+              <span class="quote-mark">「</span>
+              <span class="quote-text">将来は博士か（周囲の声）</span>
+              <span class="quote-mark">」</span>
+            </span>
+          </p>
+          <p class="char-oshii">
+            <span class="kv-label">推しポイント</span>
+            <span class="kv-value">
+              ・ライが「話し合い」にこだわる原点。<br />
+              ・彼が生きていれば…というifを思わずにはいられない。敵のコードネームに自分の弟の名が使われるライの怒りは察するに余りある😭
+            </span>
+          </p>
+        </article>
+
+        <!-- ▼ エン・ネキネイ -->
+        <article
+          class="char-card"
+          data-name="エン・ネキネイ"
+          data-works="K-EP4, K-EP5, K-EP6"
+          data-tags="反乱同盟,中庸の構え・改"
+        >
+          <h2 class="char-name">
+            エン・ネキネイ
+            <span class="char-name-sub">（アーケイ警察 / 天才剣士）</span>
+          </h2>
+          <p class="kv-row">
+            <span class="kv-label">登場作品</span>
+            <span class="kv-value">カラバァタン共和国物語 K-EP4～K-EP6</span>
+          </p>
+          <div class="char-tags kv-row">
+            <span class="kv-label">タグ</span>
+            <div class="kv-value">
+              <button class="tag-pill" type="button" data-tag="反乱同盟">反乱同盟</button>
+              <button class="tag-pill" type="button" data-tag="中庸の構え・改">中庸の構え・改</button>
+            </div>
+          </div>
+          <p class="char-summary">
+            <span class="kv-label">概要</span>
+            <span class="kv-value">
+              リアの弟子にして、警察官。K-EP4のウォール大使館事件でティナベイを撃退。K-EP4終盤ではガナリと互角に渡り合い、アヤとの決戦にも参加。「中庸の構え・改（警察棒術とのハイブリッド）」の考案者。のちにライの息子サイの師匠となる。
+            </span>
+          </p>
+          <p class="char-quote">
+            <span class="kv-label">名言</span>
+            <span class="kv-value">
+              <span class="quote-mark">「</span>
+              <span class="quote-text">両方やってみればいいんじゃないかしら</span>
+              <span class="quote-mark">」</span>
+            </span>
+          </p>
+          <p class="char-oshii">
+            <span class="kv-label">推しポイント</span>
+            <span class="kv-value">
+              ・天然なのに最強クラスというギャップ萌え！🧀「ご飯食べた？」とか緊迫した場面で言っちゃうのが可愛い。<br />
+              ・K-EP4でガナリを手錠で拘束して「正義執行」するシーンは痺れる！警察官としての矜持と剣士としての技量が融合したハイブリッドスタイルがカッコいい✨
+            </span>
+          </p>
+        </article>
+
+        <!-- ▼ ティナベイ -->
+        <article
+          class="char-card"
+          data-name="ティナベイ"
+          data-works="K-EP4"
+          data-tags="九地"
+        >
+          <h2 class="char-name">
+            ティナベイ
+            <span class="char-name-sub">（カウ派構成員）</span>
+          </h2>
+          <p class="kv-row">
+            <span class="kv-label">登場作品</span>
+            <span class="kv-value">カラバァタン共和国物語 K-EP4</span>
+          </p>
+          <div class="char-tags kv-row">
+            <span class="kv-label">タグ</span>
+            <div class="kv-value">
+              <button class="tag-pill" type="button" data-tag="九地">九地</button>
+            </div>
+          </div>
+          <p class="char-summary">
+            <span class="kv-label">概要</span>
+            <span class="kv-value">
+              九地カウ派の構成員。1950年のウォール大使館占拠事件の実行犯。ネキネイと「決闘」するも、人質解放の隙を突かれて足を撃たれ、逮捕される。
+            </span>
+          </p>
+          <p class="char-quote">
+            <span class="kv-label">名言</span>
+            <span class="kv-value">
+              <span class="quote-mark">「</span>
+              <span class="quote-text">神聖なる決闘の場だぞ！</span>
+              <span class="quote-mark">」</span>
+            </span>
+          </p>
+          <p class="char-oshii">
+            <span class="kv-label">推しポイント</span>
+            <span class="kv-value">
+              ・典型的な「古き良き決闘脳」の持ち主。ネキネイの「警察官としてのドライさ」を引き立てるための噛ませ犬感が逆に愛おしい🐶<br />
+              ・「知らないわよ」と一蹴されるのが様式美。
+            </span>
+          </p>
+        </article>
+
+        <!-- ▼ ヤナン・カウ（1955） -->
+        <article
+          class="char-card"
+          data-name="ヤナン・カウ（1955）"
+          data-works="K-EP4"
+          data-tags="九地"
+        >
+          <h2 class="char-name">
+            ヤナン・カウ（1955）
+            <span class="char-name-sub">（カウ派リーダー / コードネーム）</span>
+          </h2>
+          <p class="kv-row">
+            <span class="kv-label">登場作品</span>
+            <span class="kv-value">カラバァタン共和国物語 K-EP4</span>
+          </p>
+          <div class="char-tags kv-row">
+            <span class="kv-label">タグ</span>
+            <div class="kv-value">
+              <button class="tag-pill" type="button" data-tag="九地">九地</button>
+            </div>
+          </div>
+          <p class="char-summary">
+            <span class="kv-label">概要</span>
+            <span class="kv-value">
+              「ヤナン・カウ」はカウ派リーダーの世襲名。1955年、デュラベイ自治教区にてドゥール侵攻を企てるも、ライとアカネイに阻止される。ライに「カウはわたしの兄弟の名だ」と激昂され、敗北。
+            </span>
+          </p>
+          <p class="char-quote">
+            <span class="kv-label">名言</span>
+            <span class="kv-value">
+              <span class="quote-mark">「</span>
+              <span class="quote-text">我が名はヤナン・カウ。イスミズラーク・ディラル派の法の名の下、お前たちに正義の鉄槌を下す</span>
+              <span class="quote-mark">」</span>
+            </span>
+          </p>
+          <p class="char-oshii">
+            <span class="kv-label">推しポイント</span>
+            <span class="kv-value">
+              ・ライの地雷（弟の名前）を踏み抜いてしまった不運なボス。<br />
+              ・アカネイを「生贄」と呼んで挑発するも、兄弟の絆パワーの前に散る。ヒールとしての役割を全うした。
+            </span>
+          </p>
+        </article>
+
+        <!-- ▼ ヤナン・カウ（1963） -->
+        <article
+          class="char-card"
+          data-name="ヤナン・カウ（1963）"
+          data-works="K-EP4"
+          data-tags="九地"
+        >
+          <h2 class="char-name">
+            ヤナン・カウ（1963）
+            <span class="char-name-sub">（第一教導職の側近）</span>
+          </h2>
+          <p class="kv-row">
+            <span class="kv-label">登場作品</span>
+            <span class="kv-value">カラバァタン共和国物語 K-EP4</span>
+          </p>
+          <div class="char-tags kv-row">
+            <span class="kv-label">タグ</span>
+            <div class="kv-value">
+              <button class="tag-pill" type="button" data-tag="九地">九地</button>
+            </div>
+          </div>
+          <p class="char-summary">
+            <span class="kv-label">概要</span>
+            <span class="kv-value">
+              1963年、第一教導職公邸での決戦時に立ちはだかったカウ。ヴァラリア製のドーピング剤を使用し、ネキネイを追い詰めるも、彼女の捨て身の「賭け」に敗れ、窓から転落。
+            </span>
+          </p>
+          <p class="char-quote">
+            <span class="kv-label">名言</span>
+            <span class="kv-value">
+              <span class="quote-mark">「</span>
+              <span class="quote-text">第一教導職猊下を侮辱するな！</span>
+              <span class="quote-mark">」</span>
+            </span>
+          </p>
+          <p class="char-oshii">
+            <span class="kv-label">推しポイント</span>
+            <span class="kv-value">
+              ・ドーピングによる強化人間というロマン設定💊<br />
+              ・ネキネイとの戦いは「計算vs賭け」の構図になっていて面白い。
+            </span>
+          </p>
+        </article>
+
+        <!-- ▼ ヤナン・カウ（1970、アサセン・パラウ） -->
+        <article
+          class="char-card"
+          data-name="ヤナン・カウ（1970、アサセン・パラウ）"
+          data-works="K-EP5"
+          data-tags="九地"
+        >
+          <h2 class="char-name">
+            ヤナン・カウ（1970）
+            <span class="char-name-sub">（最後のカウ / 本名アサセン・パラウ）</span>
+          </h2>
+          <p class="kv-row">
+            <span class="kv-label">登場作品</span>
+            <span class="kv-value">カラバァタン共和国物語 K-EP5</span>
+          </p>
+          <div class="char-tags kv-row">
+            <span class="kv-label">タグ</span>
+            <div class="kv-value">
+              <button class="tag-pill" type="button" data-tag="九地">九地</button>
+            </div>
+          </div>
+          <p class="char-summary">
+            <span class="kv-label">概要</span>
+            <span class="kv-value">
+              カウ派の最後の残党。デュラベイ湾沖の船上で「アパラ（サイ）」と対決。「カウ派」と呼ばれることを嫌い、本名で呼ばれることを望んだが、アパラに「前時代の肩書き」として切り捨てられ、爆炎の中に消えた。
+            </span>
+          </p>
+          <p class="char-quote">
+            <span class="kv-label">名言</span>
+            <span class="kv-value">
+              <span class="quote-mark">「</span>
+              <span class="quote-text">真の教導国は蘇る！</span>
+              <span class="quote-mark">」</span>
+            </span>
+          </p>
+          <p class="char-oshii">
+            <span class="kv-label">推しポイント</span>
+            <span class="kv-value">
+              ・時代の徒花。アパラ（サイ）のかませ犬となってしまったが、その執念深さは本物。<br />
+              ・彼を倒したアパラが、「伝説」から進化した新しい「中庸の構え」を使っていたのが対照的。
+            </span>
+          </p>
+        </article>
+
+        <!-- ▼ ティラウン・パテイ -->
+        <article
+          class="char-card"
+          data-name="ティラウン・パテイ"
+          data-works="K-EP4, EPW"
+          data-tags="第一教導職"
+        >
+          <h2 class="char-name">
+            ティラウン・パテイ
+            <span class="char-name-sub">（第三代第一教導職 / ウォールの傀儡）</span>
+          </h2>
+          <p class="kv-row">
+            <span class="kv-label">登場作品</span>
+            <span class="kv-value">カラバァタン共和国物語 K-EP4, EPW</span>
+          </p>
+          <div class="char-tags kv-row">
+            <span class="kv-label">タグ</span>
+            <div class="kv-value">
+              <button class="tag-pill" type="button" data-tag="第一教導職">第一教導職</button>
+            </div>
+          </div>
+          <p class="char-summary">
+            <span class="kv-label">概要</span>
+            <span class="kv-value">
+              ティラウン家の放蕩息子。素行不良で勘当されるも、ウォールに拾われ傀儡政権の第一教導職に据えられる。K-EP4ではリアに庇われ、EPWではガナリに振り回されるコメディリリーフ的な悪役。最後は亡命中に事故死。
+            </span>
+          </p>
+          <p class="char-quote">
+            <span class="kv-label">名言</span>
+            <span class="kv-value">
+              <span class="quote-mark">「</span>
+              <span class="quote-text">助けろ、リア！</span>
+              <span class="quote-mark">」</span>
+            </span>
+          </p>
+          <p class="char-oshii">
+            <span class="kv-label">推しポイント</span>
+            <span class="kv-value">
+              ・清々しいまでのクズっぷりが逆に愛おしい（？）。<br />
+              ・EPWでのガナリとの凸凹コンビぶりは必見。楽器ケースに入って亡命しようとして失敗する最期まで、ネタキャラとしての役割を全うした。
+            </span>
+          </p>
+        </article>
+
+        <!-- ▼ ガナリ -->
+        <article
+          class="char-card"
+          data-name="ガナリ"
+          data-works="K-EP4, EPW"
+          data-tags="ウォール連邦準備委員会"
+        >
+          <h2 class="char-name">
+            ガナリ
+            <span class="char-name-sub">（ウォールの諜報員 / 戦闘狂）</span>
+          </h2>
+          <p class="kv-row">
+            <span class="kv-label">登場作品</span>
+            <span class="kv-value">カラバァタン共和国物語 K-EP4, EPW</span>
+          </p>
+          <div class="char-tags kv-row">
+            <span class="kv-label">タグ</span>
+            <div class="kv-value">
+              <button class="tag-pill" type="button" data-tag="ウォール連邦準備委員会">ウォール連邦準備委員会</button>
+            </div>
+          </div>
+          <p class="char-summary">
+            <span class="kv-label">概要</span>
+            <span class="kv-value">
+              ウォール連邦準備委員会のエージェント。パテイ政権の監視役。ガリバル族の決闘剣術の使い手で、K-EP4ではネキネイと激闘を繰り広げた。EPWではパテイの世話に奔走し、最後は君主制保全省の刺客と戦うなど、意外と苦労人。ネキネイの「中庸の構え・改」の開発ノートを添削するなど、奇妙な師弟関係？も。
+            </span>
+          </p>
+          <p class="char-quote">
+            <span class="kv-label">名言</span>
+            <span class="kv-value">
+              <span class="quote-mark">「</span>
+              <span class="quote-text">神は賽を振るうためにわたしたちに手を賜ったのだ！</span>
+              <span class="quote-mark">」</span>
+            </span>
+          </p>
+          <p class="char-oshii">
+            <span class="kv-label">推しポイント</span>
+            <span class="kv-value">
+              ・ビジネスライクかと思いきや、根っからの戦闘狂！「決闘」に美学を感じるあたり、実はアツい男🔥<br />
+              ・ネキネイとのライバル関係が最高。敵同士なのに技術を認め合う関係性、良き…<br />
+              ・EPWでパテイに振り回されて胃を痛めてそうな中間管理職ムーブも味わい深い。
+            </span>
+          </p>
+        </article>
+
+        <!-- ==================== K-EP5～K-EP6 / EP'99 ==================== -->
+
+        <!-- ▼ アネン・キラネイ -->
+        <article
+          class="char-card"
+          data-name="アネン・キラネイ"
+          data-works="K-EP5, K-EP6"
+          data-tags="第一教導職"
+        >
+          <h2 class="char-name">
+            アネン・キラネイ
+            <span class="char-name-sub">（第四代第一教導職）</span>
+          </h2>
+          <p class="kv-row">
+            <span class="kv-label">登場作品</span>
+            <span class="kv-value">カラバァタン共和国物語 K-EP5～K-EP6</span>
+          </p>
+          <div class="char-tags kv-row">
+            <span class="kv-label">タグ</span>
+            <div class="kv-value">
+              <button class="tag-pill" type="button" data-tag="第一教導職">第一教導職</button>
+            </div>
+          </div>
+          <p class="char-summary">
+            <span class="kv-label">概要</span>
+            <span class="kv-value">
+              パテイ政権崩壊後に就任した第一教導職。ウォール色の一掃に尽力。タネイを広報官に抜擢するも、彼のパラジェイ信奉（過激さ）を危惧して解任。1978年、ミセニティウ大講堂にて心臓麻痺（毒殺）により急死。その死はタネイ政権樹立の引き金となった。
+            </span>
+          </p>
+          <p class="char-quote">
+            <span class="kv-label">名言</span>
+            <span class="kv-value">
+              <span class="quote-mark">「</span>
+              <span class="quote-text">（パラジェイの功罪を知りつつ、国を安定させようとした良識派）</span>
+              <span class="quote-mark">」</span>
+            </span>
+          </p>
+          <p class="char-oshii">
+            <span class="kv-label">推しポイント</span>
+            <span class="kv-value">
+              ・狂気の時代における数少ない常識人枠。タネイの危険性をいち早く見抜いていた慧眼は流石。<br />
+              ・彼の死が「ミステリー」として物語を動かし、アカウやサイの運命を狂わせていく…悲劇のトリガーとなった人物。
+            </span>
+          </p>
+        </article>
+
+        <!-- ▼ ラデン・タネイ -->
+        <article
+          class="char-card"
+          data-name="ラデン・タネイ"
+          data-works="K-EP5, K-EP6, H-EP7, A-EP1"
+          data-tags="第一教導職,深紅のナイフ,無心の構え"
+        >
+          <h2 class="char-name">
+            ラデン・タネイ
+            <span class="char-name-sub">（第五代第一教導職 / 稀代のカリスマ）</span>
+          </h2>
+          <p class="kv-row">
+            <span class="kv-label">登場作品</span>
+            <span class="kv-value">カラバァタン共和国物語 K-EP5～K-EP6 / H-EP7 他</span>
+          </p>
+          <div class="char-tags kv-row">
+            <span class="kv-label">タグ</span>
+            <div class="kv-value">
+              <button class="tag-pill" type="button" data-tag="第一教導職">第一教導職</button>
+              <button class="tag-pill" type="button" data-tag="深紅のナイフ">深紅のナイフ</button>
+              <button class="tag-pill" type="button" data-tag="無心の構え">無心の構え</button>
+            </div>
+          </div>
+          <p class="char-summary">
+            <span class="kv-label">概要</span>
+            <span class="kv-value">
+              シャウン・パラジェイを信奉する改革者。アカウのプロパガンダにより国民的英雄となり、第一教導職に就任。ルルペ協定締結など数々の功績を残す。「ナイフは選択の手段ではない」として普段は武器を持たないが、K-EP6のサテラ戦ではネキネイから託された「深紅のナイフ」と「無心の構え」で戦った。
+            </span>
+          </p>
+          <p class="char-quote">
+            <span class="kv-label">名言</span>
+            <span class="kv-value">
+              <span class="quote-mark">「</span>
+              <span class="quote-text">笑ってほしい。生きていればそれでいい、そうだろう？</span>
+              <span class="quote-mark">」</span>
+            </span>
+          </p>
+          <p class="char-oshii">
+            <span class="kv-label">推しポイント</span>
+            <span class="kv-value">
+              ・理想の上司にして最高の旦那様（ただし天然）。アカウの性別やコトの本性を知りつつ受け入れる器のデカさがカンストしてる✨<br />
+              ・K-EP6でアカウの罪（サイ殺害）を知り、それでも彼女と共に背負う覚悟を決めるシーンは涙腺崩壊😭<br />
+              ・「無心の構え」でサテラの猛攻を捌く姿は、かつてのキナベイを彷彿とさせてエモい…
+            </span>
+          </p>
+        </article>
+
+        <!-- ▼ シャウン・アカウ -->
+        <article
+          class="char-card"
+          data-name="シャウン・アカウ"
+          data-works="K-EP5, K-EP6, H-EP3, EP'99"
+          data-tags="九地,白梟,純白のナイフ"
+        >
+          <h2 class="char-name">
+            シャウン・アカウ
+            <span class="char-name-sub">（三代目白梟 / 政務官）</span>
+          </h2>
+          <p class="kv-row">
+            <span class="kv-label">登場作品</span>
+            <span class="kv-value">カラバァタン共和国物語 K-EP5～K-EP6 / H-EP3 / EP'99</span>
+          </p>
+          <div class="char-tags kv-row">
+            <span class="kv-label">タグ</span>
+            <div class="kv-value">
+              <button class="tag-pill" type="button" data-tag="九地">九地</button>
+              <button class="tag-pill" type="button" data-tag="白梟">白梟</button>
+              <button class="tag-pill" type="button" data-tag="純白のナイフ">純白のナイフ</button>
+            </div>
+          </div>
+          <p class="char-summary">
+            <span class="kv-label">概要</span>
+            <span class="kv-value">
+              アヤの娘だが、母セイネの意向で男として育てられる。タネイを深く愛し、彼を第一教導職にするために「白梟」として汚れ仕事を請け負う。ライから受け継いだ「純白のナイフ」を持つ。K-EP6にてタネイを守るため、真相に近づいたサイを殺害。H-EP3ではファタたちを陰から助ける。
+            </span>
+          </p>
+          <p class="char-quote">
+            <span class="kv-label">名言</span>
+            <span class="kv-value">
+              <span class="quote-mark">「</span>
+              <span class="quote-text">もう迷わない。わたしがラデン・タネイを守る</span>
+              <span class="quote-mark">」</span>
+            </span>
+          </p>
+          <p class="char-oshii">
+            <span class="kv-label">推しポイント</span>
+            <span class="kv-value">
+              ・男装の麗人×献身的な愛×汚れ役＝最強🔥 タネイへの愛が重すぎて、そのために友人の息子（サイ）すら手に掛ける修羅の道を選ぶ姿が切なすぎる…<br />
+              ・Hシリーズでの「伝説のヒーロー」的な登場もカッコいいけど、Kシリーズでの苦悩を知ってるとさらに深みが増す。<br />
+              ・タネイの前で見せる「乙女」な一面と、白梟としての冷酷さのギャップが尊い†
+            </span>
+          </p>
+        </article>
+
+        <!-- ▼ セイネ -->
+        <article
+          class="char-card"
+          data-name="セイネ"
+          data-works="K-EP5"
+          data-tags="市民"
+        >
+          <h2 class="char-name">
+            セイネ
+            <span class="char-name-sub">（アヤの第一夫人 / アカウの母）</span>
+          </h2>
+          <p class="kv-row">
+            <span class="kv-label">登場作品</span>
+            <span class="kv-value">カラバァタン共和国物語 K-EP5</span>
+          </p>
+          <div class="char-tags kv-row">
+            <span class="kv-label">タグ</span>
+            <div class="kv-value">
+              <button class="tag-pill" type="button" data-tag="市民">市民</button>
+            </div>
+          </div>
+          <p class="char-summary">
+            <span class="kv-label">概要</span>
+            <span class="kv-value">
+              シャウン・アヤの第一夫人。政争に勝つため、娘であるアカウを「男」として育てることを決断した。この秘密がアカウの人生を大きく歪めることになる。
+            </span>
+          </p>
+          <p class="char-quote">
+            <span class="kv-label">名言</span>
+            <span class="kv-value">
+              <span class="quote-mark">「</span>
+              <span class="quote-text">（記述なし）</span>
+              <span class="quote-mark">」</span>
+            </span>
+          </p>
+          <p class="char-oshii">
+            <span class="kv-label">推しポイント</span>
+            <span class="kv-value">
+              ・九氏族の闇を体現する存在。彼女のエゴがなければ、アカウは普通の少女として幸せになれたかもしれない…というifを想像させる重要人物。
+            </span>
+          </p>
+        </article>
+
+        <!-- ▼ ニア・キナベイ -->
+        <article
+          class="char-card"
+          data-name="ニア・キナベイ"
+          data-works="K-EP5"
+          data-tags="ニア・キナイニ"
+        >
+          <h2 class="char-name">
+            ニア・キナベイ
+            <span class="char-name-sub">（マフィアの首領）</span>
+          </h2>
+          <p class="kv-row">
+            <span class="kv-label">登場作品</span>
+            <span class="kv-value">カラバァタン共和国物語 K-EP5</span>
+          </p>
+          <div class="char-tags kv-row">
+            <span class="kv-label">タグ</span>
+            <div class="kv-value">
+              <button class="tag-pill" type="button" data-tag="ニア・キナイニ">ニア・キナイニ</button>
+            </div>
+          </div>
+          <p class="char-summary">
+            <span class="kv-label">概要</span>
+            <span class="kv-value">
+              マフィア「ニア・キナイニ」のボス。伝説のキナベイの名を騙り、シャウン家の屋敷に立てこもる。幼いアカウを人質にするも、突入してきたアパラにあっけなく倒される。
+            </span>
+          </p>
+          <p class="char-quote">
+            <span class="kv-label">名言</span>
+            <span class="kv-value">
+              <span class="quote-mark">「</span>
+              <span class="quote-text">（特になし、悲鳴のみ）</span>
+              <span class="quote-mark">」</span>
+            </span>
+          </p>
+          <p class="char-oshii">
+            <span class="kv-label">推しポイント</span>
+            <span class="kv-value">
+              ・典型的な「虎の威を借る狐」。本物の九地（アパラ）との格の違いを見せつけられるためだけの存在が逆に清々しい。<br />
+              ・アカウが初めてナイフを手にするきっかけを作ったという意味では重要。
+            </span>
+          </p>
+        </article>
+
+        <!-- ▼ アパラ -->
+        <article
+          class="char-card"
+          data-name="アパラ"
+          data-works="K-EP5, K-EP6"
+          data-tags="九地,影梟,無心の構え"
+        >
+          <h2 class="char-name">
+            アパラ
+            <span class="char-name-sub">（影梟 / 新たな時代の使い）</span>
+          </h2>
+          <p class="kv-row">
+            <span class="kv-label">登場作品</span>
+            <span class="kv-value">カラバァタン共和国物語 K-EP5～K-EP6</span>
+          </p>
+          <div class="char-tags kv-row">
+            <span class="kv-label">タグ</span>
+            <div class="kv-value">
+              <button class="tag-pill" type="button" data-tag="九地">九地</button>
+              <button class="tag-pill" type="button" data-tag="影梟">影梟</button>
+              <button class="tag-pill" type="button" data-tag="無心の構え">無心の構え</button>
+            </div>
+          </div>
+          <p class="char-summary">
+            <span class="kv-label">概要</span>
+            <span class="kv-value">
+              九地の「影梟」。アヤ政権下で「選択」をもたらす者として暗躍。K-EP5でカウ派の残党を殲滅し、幼いアカウを救出。K-EP6ではスクニューネ沖の船上でコト（青天）と対決するも、彼女の「自動反撃」と「手動」の切り替えに敗れ、死亡。
+            </span>
+          </p>
+          <p class="char-quote">
+            <span class="kv-label">名言</span>
+            <span class="kv-value">
+              <span class="quote-mark">「</span>
+              <span class="quote-text">真の教導国よ、永遠なれ！</span>
+              <span class="quote-mark">」</span>
+            </span>
+          </p>
+          <p class="char-oshii">
+            <span class="kv-label">推しポイント</span>
+            <span class="kv-value">
+              ・仕事人としてのプロフェッショナル感がカッコいい。<br />
+              ・K-EP5でサイを倒した際に見せた圧倒的な実力と、K-EP6でコトに敗れる際の潔さの対比が印象的。
+            </span>
+          </p>
+        </article>
+
+        <!-- ▼ ラカン・サイ -->
+        <article
+          class="char-card"
+          data-name="ラカン・サイ"
+          data-works="K-EP5, K-EP6"
+          data-tags="中庸の構え・改"
+        >
+          <h2 class="char-name">
+            ラカン・サイ
+            <span class="char-name-sub">（ライの息子 / 正義の刑事）</span>
+          </h2>
+          <p class="kv-row">
+            <span class="kv-label">登場作品</span>
+            <span class="kv-value">カラバァタン共和国物語 K-EP5～K-EP6</span>
+          </p>
+          <div class="char-tags kv-row">
+            <span class="kv-label">タグ</span>
+            <div class="kv-value">
+              <button class="tag-pill" type="button" data-tag="中庸の構え・改">中庸の構え・改</button>
+            </div>
+          </div>
+          <p class="char-summary">
+            <span class="kv-label">概要</span>
+            <span class="kv-value">
+              ラカン・ライの息子。ネキネイの弟子。警視庁捜査一課の刑事としてカウ派殲滅などに尽力。キラネイ暗殺事件の真相（ティラウン家とジューナーの関与、タネイへの疑惑）に迫るが、証拠隠滅を図るアカウと対決し、命を落とす。「中庸の構え・改」の使い手。Hシリーズのファタの父。
+            </span>
+          </p>
+          <p class="char-quote">
+            <span class="kv-label">名言</span>
+            <span class="kv-value">
+              <span class="quote-mark">「</span>
+              <span class="quote-text">父さん、ちゃんと『ラカン・ライ』を超えられたかな</span>
+              <span class="quote-mark">」</span>
+            </span>
+          </p>
+          <p class="char-oshii">
+            <span class="kv-label">推しポイント</span>
+            <span class="kv-value">
+              ・正義のために命を燃やした悲劇のヒーロー…😭 父ライが目指した「話し合い」の世界を守ろうとして、皮肉にも「選択」の暴力（アカウ）に散る姿が辛すぎる。<br />
+              ・彼の死が、息子ファタに「備え」の大切さを教え、物語をハーロピノンへと繋いでいく重要人物。
+            </span>
+          </p>
+        </article>
+
+        <!-- ▼ マジェン・カレイ -->
+        <article
+          class="char-card"
+          data-name="マジェン・カレイ"
+          data-works="K-EP5, K-EP6, H-EP7, H-EP12"
+          data-tags="第二教導職"
+        >
+          <h2 class="char-name">
+            マジェン・カレイ
+            <span class="char-name-sub">（原子力オタク / 第二教導職）</span>
+          </h2>
+          <p class="kv-row">
+            <span class="kv-label">登場作品</span>
+            <span class="kv-value">カラバァタン共和国物語 K-EP5～K-EP6 / H-EP7 他</span>
+          </p>
+          <div class="char-tags kv-row">
+            <span class="kv-label">タグ</span>
+            <div class="kv-value">
+              <button class="tag-pill" type="button" data-tag="第二教導職">第二教導職</button>
+            </div>
+          </div>
+          <p class="char-summary">
+            <span class="kv-label">概要</span>
+            <span class="kv-value">
+              タネイ、アカウの幼馴染。ナレジア連邦大学で原子力工学を学ぶ。留学中にサテラと出会い恋に落ちるが、彼女がスパイだと知り決別。K-EP6終盤ではタネイ、アカウと共にサテラと対峙する。ぬいぐるみ（お友達）が好きという可愛い一面も。
+            </span>
+          </p>
+          <p class="char-quote">
+            <span class="kv-label">名言</span>
+            <span class="kv-value">
+              <span class="quote-mark">「</span>
+              <span class="quote-text">もうやめにしよう。ぼくに九地を止める義理はない</span>
+              <span class="quote-mark">」</span>
+            </span>
+          </p>
+          <p class="char-oshii">
+            <span class="kv-label">推しポイント</span>
+            <span class="kv-value">
+              ・サテラとの悲恋が…辛い…😭 純粋な恋心が国家間の対立に引き裂かれる様はKシリーズ屈指の泣き所。<br />
+              ・Hシリーズで見せる頼れる大人な姿と、Kシリーズでのぬいぐるみ好きのギャップが愛おしい🧸<br />
+              ・アカウが落ち込んでいるときに「ホームパーティー」を開く優しさが最高。
+            </span>
+          </p>
+        </article>
+
+        <!-- ▼ コト・テイル・アイテール -->
+        <article
+          class="char-card"
+          data-name="コト・テイル・アイテール"
+          data-works="K-EP5, K-EP6, Hシリーズ, Aシリーズ"
+          data-tags="五天"
+        >
+          <h2 class="char-name">
+            コト・テイル・アイテール
+            <span class="char-name-sub">（青天 / タネイの第二夫人）</span>
+          </h2>
+          <p class="kv-row">
+            <span class="kv-label">登場作品</span>
+            <span class="kv-value">カラバァタン共和国物語 / ハーロピノン共和国物語 他</span>
+          </p>
+          <div class="char-tags kv-row">
+            <span class="kv-label">タグ</span>
+            <div class="kv-value">
+              <button class="tag-pill" type="button" data-tag="五天">五天</button>
+            </div>
+          </div>
+          <p class="char-summary">
+            <span class="kv-label">概要</span>
+            <span class="kv-value">
+              五天の幹部「青天」。タネイの第二夫人として潜り込むが、彼を「殺したいほど愛する」ようになる。K-EP6にてアカウに爆殺されたと思われたが生存。盲目となりながらもタネイへの歪んだ愛を貫く。Hシリーズではアーシャやキュビと共に暗躍。
+            </span>
+          </p>
+          <p class="char-quote">
+            <span class="kv-label">名言</span>
+            <span class="kv-value">
+              <span class="quote-mark">「</span>
+              <span class="quote-text">あぁ、旦那さま〜！早く殺してさしあげたいですの〜！</span>
+              <span class="quote-mark">」</span>
+            </span>
+          </p>
+          <p class="char-oshii">
+            <span class="kv-label">推しポイント</span>
+            <span class="kv-value">
+              ・ぶっ飛んだヤンデレお嬢様！タネイグッズを収集したり、アカウ（恋敵）にマウントを取ったりする姿が強烈すぎる🌹<br />
+              ・『ブックキーパー』でのアーシャとの掛け合いや、『コトのビデオレター』での狂気など、スピンオフでも大暴れするサーガ屈指の人気ヴィラン。<br />
+              ・盲目になってさらに感覚が研ぎ澄まされ、強くなる戦闘スタイルもカッコいい。
+            </span>
+          </p>
+        </article>
+
+        <!-- ▼ サテラ・ロン -->
+        <article
+          class="char-card"
+          data-name="サテラ・ロン"
+          data-works="K-EP6, Hシリーズ"
+          data-tags="ジューナー"
+        >
+          <h2 class="char-name">
+            サテラ・ロン
+            <span class="char-name-sub">（ジューナーの魔女 / 寮母）</span>
+          </h2>
+          <p class="kv-row">
+            <span class="kv-label">登場作品</span>
+            <span class="kv-value">カラバァタン共和国物語 K-EP6 / ハーロピノン共和国物語</span>
+          </p>
+          <div class="char-tags kv-row">
+            <span class="kv-label">タグ</span>
+            <div class="kv-value">
+              <button class="tag-pill" type="button" data-tag="ジューナー">ジューナー</button>
+            </div>
+          </div>
+          <p class="char-summary">
+            <span class="kv-label">概要</span>
+            <span class="kv-value">
+              ハーロピノンの秘密結社「ジューナー」の工作員。「幸せの平均化」を掲げ、カラベイの教導君主制を崩壊させるために潜入。カレイに近づくも、K-EP6終盤でタネイ・アカウ・カレイの連携に敗れ、強制送還される。その後はヘリエンで寮母としてHシリーズの主人公たちを見守る。
+            </span>
+          </p>
+          <p class="char-quote">
+            <span class="kv-label">名言</span>
+            <span class="kv-value">
+              <span class="quote-mark">「</span>
+              <span class="quote-text">最後までお友達でいたかったんだけどね</span>
+              <span class="quote-mark">」</span>
+            </span>
+          </p>
+          <p class="char-oshii">
+            <span class="kv-label">推しポイント</span>
+            <span class="kv-value">
+              ・Kシリーズのラスボスにして、Hシリーズの保護者ポジションという立ち位置の変化が面白い。<br />
+              ・カレイとの別れ際に渡された「周期表コップ」と「ヒガンバナのバッジ」のエピソードが切なすぎる…いつかカレイと再会してほしいと願わずにはいられないキャラ😢
+            </span>
+          </p>
+        </article>
+
+        <!-- ==================== K-EP0（前日譚） ==================== -->
+
+        <!-- ▼ ラデン・ラー -->
+        <article
+          class="char-card"
+          data-name="ラデン・ラー"
+          data-works="K-EP0"
+          data-tags="第一教導職,キナイニ"
+        >
+          <h2 class="char-name">
+            ラデン・ラー
+            <span class="char-name-sub">（当時の第一教導職 / キナベイの父）</span>
+          </h2>
+          <p class="kv-row">
+            <span class="kv-label">登場作品</span>
+            <span class="kv-value">カラバァタン共和国物語 K-EP0</span>
+          </p>
+          <div class="char-tags kv-row">
+            <span class="kv-label">タグ</span>
+            <div class="kv-value">
+              <button class="tag-pill" type="button" data-tag="第一教導職">第一教導職</button>
+              <button class="tag-pill" type="button" data-tag="キナイニ">キナイニ</button>
+            </div>
+          </div>
+          <p class="char-summary">
+            <span class="kv-label">概要</span>
+            <span class="kv-value">
+              1890年代の第一教導職。ラデン・キナベイの父。多忙な公務のため、息子の育成をカイン・カナに託す。評議会内での対立を仲裁しつつ、九氏族連続殺人事件や列車ジャック事件への対応にあたった。キナベイの成長を認め、次代への希望を託した人格者。
+            </span>
+          </p>
+          <p class="char-quote">
+            <span class="kv-label">名言</span>
+            <span class="kv-value">
+              <span class="quote-mark">「</span>
+              <span class="quote-text">九地にまた動きがあったときは、今度こそ真相を明らかにしてくれ、息子よ</span>
+              <span class="quote-mark">」</span>
+            </span>
+          </p>
+          <p class="char-oshii">
+            <span class="kv-label">推しポイント</span>
+            <span class="kv-value">
+              ・キナベイのパパ！カナとはまた違ったベクトルで息子を見守る威厳ある父親像が素敵。<br />
+              ・彼が「天命の子」の予言を出さなければパラジェイの運命も変わっていたかも…歴史の歯車を回した重要人物。
+            </span>
+          </p>
+        </article>
+
+        <!-- ▼ シャウン・アウセイ -->
+        <article
+          class="char-card"
+          data-name="シャウン・アウセイ"
+          data-works="K-EP0"
+          data-tags="キナイニ"
+        >
+          <h2 class="char-name">
+            シャウン・アウセイ
+            <span class="char-name-sub">（パラジェイの父 / 保守派の重鎮）</span>
+          </h2>
+          <p class="kv-row">
+            <span class="kv-label">登場作品</span>
+            <span class="kv-value">カラバァタン共和国物語 K-EP0</span>
+          </p>
+          <div class="char-tags kv-row">
+            <span class="kv-label">タグ</span>
+            <div class="kv-value">
+              <button class="tag-pill" type="button" data-tag="キナイニ">キナイニ</button>
+            </div>
+          </div>
+          <p class="char-summary">
+            <span class="kv-label">概要</span>
+            <span class="kv-value">
+              シャウン・パラジェイの実父。評議会では保守派として九地の活動（国境警備など）を擁護する立場を取っていた。脱植民地主義を進めようとしたため、ティラウン家の陰謀により「九氏族連続殺人事件」の被害者となり、命を落とす。
+            </span>
+          </p>
+          <p class="char-quote">
+            <span class="kv-label">名言</span>
+            <span class="kv-value">
+              <span class="quote-mark">「</span>
+              <span class="quote-text">九地は過激だが筋は通っている</span>
+              <span class="quote-mark">」</span>
+            </span>
+          </p>
+          <p class="char-oshii">
+            <span class="kv-label">推しポイント</span>
+            <span class="kv-value">
+              ・息子と引き離され、再会することなく政争の犠牲になった悲劇の父親…😭<br />
+              ・彼の死がハサネイの怒りを呼び、回り回ってパラジェイの覚醒に繋がるという因果が切ない。
+            </span>
+          </p>
+        </article>
+
+        <!-- ▼ ティラウン・ワライ -->
+        <article
+          class="char-card"
+          data-name="ティラウン・ワライ"
+          data-works="K-EP0, K-EP1"
+          data-tags="キナイニ"
+        >
+          <h2 class="char-name">
+            ティラウン・ワライ
+            <span class="char-name-sub">（評議会の重鎮 / 師範代）</span>
+          </h2>
+          <p class="kv-row">
+            <span class="kv-label">登場作品</span>
+            <span class="kv-value">カラバァタン共和国物語 K-EP0～K-EP1</span>
+          </p>
+          <div class="char-tags kv-row">
+            <span class="kv-label">タグ</span>
+            <div class="kv-value">
+              <button class="tag-pill" type="button" data-tag="キナイニ">キナイニ</button>
+            </div>
+          </div>
+          <p class="char-summary">
+            <span class="kv-label">概要</span>
+            <span class="kv-value">
+              ティラウン家の当主で穏健派（親デルタイ・親アルモナ）。部下が勝手に起こした「九氏族連続殺人事件」の責任者とみなされ、ハサネイに襲撃される。K-EP1（1927年）ではパレイ（白梟）を捕らえようとするも、逆に彼の圧倒的な武力の前に蹂躙され、死亡。
+            </span>
+          </p>
+          <p class="char-quote">
+            <span class="kv-label">名言</span>
+            <span class="kv-value">
+              <span class="quote-mark">「</span>
+              <span class="quote-text">本当に私は何も知らない、唯一神イラトの御名に誓って</span>
+              <span class="quote-mark">」</span>
+            </span>
+          </p>
+          <p class="char-oshii">
+            <span class="kv-label">推しポイント</span>
+            <span class="kv-value">
+              ・部下の不始末で恨まれ、パレイには「悪魔」と罵られながら殺される…ある意味一番人間臭い被害者。<br />
+              ・パレイの「中庸の構え〈真〉」の強さを引き立てるための噛ませ犬ムーブが完璧すぎる🐶
+            </span>
+          </p>
+        </article>
+
+        <!-- ▼ サウシェイ -->
+        <article
+          class="char-card"
+          data-name="サウシェイ"
+          data-works="K-EP0"
+          data-tags="九地"
+        >
+          <h2 class="char-name">
+            サウシェイ
+            <span class="char-name-sub">（自称「白梟」）</span>
+          </h2>
+          <p class="kv-row">
+            <span class="kv-label">登場作品</span>
+            <span class="kv-value">カラバァタン共和国物語 K-EP0</span>
+          </p>
+          <div class="char-tags kv-row">
+            <span class="kv-label">タグ</span>
+            <div class="kv-value">
+              <button class="tag-pill" type="button" data-tag="九地">九地</button>
+            </div>
+          </div>
+          <p class="char-summary">
+            <span class="kv-label">概要</span>
+            <span class="kv-value">
+              ハヴァレイキ線ジャック事件の実行犯。「白梟」を名乗るが、カナたちには組織の捨て駒であることを見抜かれる。狭い機関室での戦いではカナとキナベイを圧倒するほどの実力者。最後はキナベイに敗れ、カナを庇って銃撃を受け死亡。
+            </span>
+          </p>
+          <p class="char-quote">
+            <span class="kv-label">名言</span>
+            <span class="kv-value">
+              <span class="quote-mark">「</span>
+              <span class="quote-text">未来が少し、見えた気がした</span>
+              <span class="quote-mark">」</span>
+            </span>
+          </p>
+          <p class="char-oshii">
+            <span class="kv-label">推しポイント</span>
+            <span class="kv-value">
+              ・偽物だけど実力と美学は本物！キナベイの「力技」を認め、潔く散る姿がカッコいい✨<br />
+              ・彼が最期にカナを庇ったこと、そして「未来」という言葉を残したことが、キナベイの人格形成に影響を与えた尊い存在。
+            </span>
+          </p>
+        </article>
+
+        <!-- ==================== EPW（ウォール傀儡政権編） ==================== -->
+
+        <!-- ▼ ウェリ・リーネン・フィア・ペスタート -->
+        <article
+          class="char-card"
+          data-name="ウェリ・リーネン・フィア・ペスタート"
+          data-works="EPW"
+          data-tags="エルテーナ"
+        >
+          <h2 class="char-name">
+            ウェリ・リーネン・フィア・ペスタート
+            <span class="char-name-sub">（エルテーナ連合の貴人）</span>
+          </h2>
+          <p class="kv-row">
+            <span class="kv-label">登場作品</span>
+            <span class="kv-value">カラバァタン共和国物語 EPW</span>
+          </p>
+          <div class="char-tags kv-row">
+            <span class="kv-label">タグ</span>
+            <div class="kv-value">
+              <button class="tag-pill" type="button" data-tag="エルテーナ">エルテーナ</button>
+            </div>
+          </div>
+          <p class="char-summary">
+            <span class="kv-label">概要</span>
+            <span class="kv-value">
+              エルテーナ連合・ペスタート公主国のリーネン家の女性。パテイ政権下のカラベイを訪問。アルディア語に堪能で、カラベイの文化にも精通している聡明な人物。パテイの無礼やガナリの翻訳操作を冷静に見透かしていた節がある。
+            </span>
+          </p>
+          <p class="char-quote">
+            <span class="kv-label">名言</span>
+            <span class="kv-value">
+              <span class="quote-mark">「</span>
+              <span class="quote-text">名前が先、姓はあと。カラベイとは反対でございます</span>
+              <span class="quote-mark">」</span>
+            </span>
+          </p>
+          <p class="char-oshii">
+            <span class="kv-label">推しポイント</span>
+            <span class="kv-value">
+              ・高貴！！パテイの下品さとの対比で、彼女の気品が際立つ✨<br />
+              ・Hシリーズのアリーやレトの同郷の先輩として、エルテーナという国の奥深さを感じさせる存在。
+            </span>
+          </p>
+        </article>
+
+        <!-- ▼ パタ・ヴェーシャ -->
+        <article
+          class="char-card"
+          data-name="パタ・ヴェーシャ"
+          data-works="EPW"
+          data-tags="エルテーナ,君主制保全省"
+        >
+          <h2 class="char-name">
+            パタ・ヴェーシャ
+            <span class="char-name-sub">（君主制保全省の刺客）</span>
+          </h2>
+          <p class="kv-row">
+            <span class="kv-label">登場作品</span>
+            <span class="kv-value">カラバァタン共和国物語 EPW</span>
+          </p>
+          <div class="char-tags kv-row">
+            <span class="kv-label">タグ</span>
+            <div class="kv-value">
+              <button class="tag-pill" type="button" data-tag="エルテーナ">エルテーナ</button>
+              <button class="tag-pill" type="button" data-tag="君主制保全省">君主制保全省</button>
+            </div>
+          </div>
+          <p class="char-summary">
+            <span class="kv-label">概要</span>
+            <span class="kv-value">
+              エルテーナの諜報機関「君主制保全省」のエージェント。あるべき君主を据えるため、無能なパテイを排除しようとする。迎賓館での暗殺未遂、そして亡命阻止のカーチェイスを経て、ガナリと対決。蹴り技を主体とした戦闘スタイルで、ガナリを「決闘」の末に下す。
+            </span>
+          </p>
+          <p class="char-quote">
+            <span class="kv-label">名言</span>
+            <span class="kv-value">
+              <span class="quote-mark">「</span>
+              <span class="quote-text">くそったれには負けない。これはわたしの『選択』だ</span>
+              <span class="quote-mark">」</span>
+            </span>
+          </p>
+          <p class="char-oshii">
+            <span class="kv-label">推しポイント</span>
+            <span class="kv-value">
+              ・組織の駒として動きつつも、最後はひとりの人間としての「選択」と「決闘」に生きる姿が熱い🔥<br />
+              ・ガナリとの蹴り技バトルはEPW最大の見せ場！敵同士だが通じ合うライバル関係が最高。
+            </span>
+          </p>
+        </article>
+
+        <!-- ==================== ハーロピノン共和国物語（パラジェイのナイフ編） ==================== -->
+
+        <!-- ▼ エイグレ・ヤル -->
+        <article
+          class="char-card"
+          data-name="エイグレ・ヤル"
+          data-works="H-EP2, H-EP3, H-EP10, H-EP11"
+          data-tags="マンツァル"
+        >
+          <h2 class="char-name">
+            エイグレ・ヤル
+            <span class="char-name-sub">（マンツァル自治会長 / 万年学生）</span>
+          </h2>
+          <p class="kv-row">
+            <span class="kv-label">登場作品</span>
+            <span class="kv-value">ハーロピノン共和国物語 H-EP2～H-EP3 他</span>
+          </p>
+          <div class="char-tags kv-row">
+            <span class="kv-label">タグ</span>
+            <div class="kv-value">
+              <button class="tag-pill" type="button" data-tag="マンツァル">マンツァル</button>
+            </div>
+          </div>
+          <p class="char-summary">
+            <span class="kv-label">概要</span>
+            <span class="kv-value">
+              ヘリエン国立大学の学生自治組織「マンツァル」のリーダー。年齢不詳の万年学生。学生自治を標榜するが、裏では大学当局や五天、警察と癒着し、暴力で異論を排除する。「パラジェイのナイフ（偽物）」による殺人事件を隠蔽しようとしたが、レトたちの告発とシナン・ファタたちの活躍により逮捕される。
+            </span>
+          </p>
+          <p class="char-quote">
+            <span class="kv-label">名言</span>
+            <span class="kv-value">
+              <span class="quote-mark">「</span>
+              <span class="quote-text">きみたちも真相を知ってしまったなら、ここで革命のための贄となってもらおう</span>
+              <span class="quote-mark">」</span>
+            </span>
+          </p>
+          <p class="char-oshii">
+            <span class="kv-label">推しポイント</span>
+            <span class="kv-value">
+              ・「腐敗した権力」を絵に描いたような小悪党っぷりが逆に清々しい。<br />
+              ・H-EP10（過去編）ではアルカに論破されかけたり、H-EP11ではエスティにボコられたりと、実は昔から噛ませ犬ポジションだったことが判明して味わい深い🐶
+            </span>
+          </p>
+        </article>
+
+        <!-- ▼ ダーツ・スリンガー -->
+        <article
+          class="char-card"
+          data-name="ダーツ・スリンガー"
+          data-works="H-EP0, H-EP3, H-EP9"
+          data-tags="ウォール連邦準備委員会"
+        >
+          <h2 class="char-name">
+            ダーツ・スリンガー
+            <span class="char-name-sub">（サウソス交番巡査 / 諜報員）</span>
+          </h2>
+          <p class="kv-row">
+            <span class="kv-label">登場作品</span>
+            <span class="kv-value">ハーロピノン共和国物語 H-EP0～H-EP9</span>
+          </p>
+          <div class="char-tags kv-row">
+            <span class="kv-label">タグ</span>
+            <div class="kv-value">
+              <button class="tag-pill" type="button" data-tag="ウォール連邦準備委員会">ウォール連邦準備委員会</button>
+            </div>
+          </div>
+          <p class="char-summary">
+            <span class="kv-label">概要</span>
+            <span class="kv-value">
+              サウソス地区の警察官。陽気な怠け者を装っているが、正体はウォール連邦準備委員会のエージェント。アリーたちに「三すくみ（警察・五天・マンツァル）」の癒着情報を提供し、事件解決をアシストする（と同時に警察の弱みを握る）。「自由の使者」を自称する食えない男。
+            </span>
+          </p>
+          <p class="char-quote">
+            <span class="kv-label">名言</span>
+            <span class="kv-value">
+              <span class="quote-mark">「</span>
+              <span class="quote-text">わたしは自由の使者さ。若者たちよ、その手で賽を思う存分振るいたまえ！</span>
+              <span class="quote-mark">」</span>
+            </span>
+          </p>
+          <p class="char-oshii">
+            <span class="kv-label">推しポイント</span>
+            <span class="kv-value">
+              ・「ただの警官じゃない」オーラが最高にカッコいい！ガナリと同じ組織の人間らしく、したたかで実利主義だけど、若者たちの未来を面白がって支援する度量がある✨<br />
+              ・サテラの監視役として「週報」を受け取るやり取りが、奇妙な信頼関係を感じさせて好き。
+            </span>
+          </p>
+        </article>
+
+        <!-- ▼ シユウ・レイ -->
+        <article
+          class="char-card"
+          data-name="シユウ・レイ"
+          data-works="H-EP0, H-EP3, H-EP8, H-EP9"
+          data-tags="五天"
+        >
+          <h2 class="char-name">
+            シユウ・レイ
+            <span class="char-name-sub">（マッドサイエンティスト / 闇医者）</span>
+          </h2>
+          <p class="kv-row">
+            <span class="kv-label">登場作品</span>
+            <span class="kv-value">ハーロピノン共和国物語 H-EP0～H-EP9</span>
+          </p>
+          <div class="char-tags kv-row">
+            <span class="kv-label">タグ</span>
+            <div class="kv-value">
+              <button class="tag-pill" type="button" data-tag="五天">五天</button>
+            </div>
+          </div>
+          <p class="char-summary">
+            <span class="kv-label">概要</span>
+            <span class="kv-value">
+              サウソス西クリニックの医師。ソラン系移民二世。サテラの友人であり、アリーたちの良き相談相手。しかし、その正体は五天（キュビ・フラウゼット）の科学者であり、ドーピング剤「モート」の開発者。H-EP9にて、ダヒアを救うために禁忌を犯し、完全に闇の世界へと足を踏み入れる。
+            </span>
+          </p>
+          <p class="char-quote">
+            <span class="kv-label">名言</span>
+            <span class="kv-value">
+              <span class="quote-mark">「</span>
+              <span class="quote-text">クロロアセトフェノン、致死性の猛毒だ（嘘）</span>
+              <span class="quote-mark">」</span>
+            </span>
+          </p>
+          <p class="char-oshii">
+            <span class="kv-label">推しポイント</span>
+            <span class="kv-value">
+              ・クールな白衣のお姉さん…に見えて、誰よりも情に厚く、それゆえに道を外れてしまう悲劇の人😭<br />
+              ・H-EP9でアルヤニ（ダヒア父）に対して「監督交代」を宣言し、復讐と治療を同時に行うシーンの狂気と愛が凄まじい。<br />
+              ・クラの歌う『線の向こうで』が彼女に向けられたものだと知ると、涙なしには聴けない…
+            </span>
+          </p>
+        </article>
+
+        <!-- ▼ モン -->
+        <article
+          class="char-card"
+          data-name="モン"
+          data-works="H-EP0, H-EP5, H-EP12, H-EP10（回想）"
+          data-tags="市民"
+        >
+          <h2 class="char-name">
+            モン
+            <span class="char-name-sub">（イーフン飯店の看板娘）</span>
+          </h2>
+          <p class="kv-row">
+            <span class="kv-label">登場作品</span>
+            <span class="kv-value">ハーロピノン共和国物語 H-EP0～H-EP12</span>
+          </p>
+          <div class="char-tags kv-row">
+            <span class="kv-label">タグ</span>
+            <div class="kv-value">
+              <button class="tag-pill" type="button" data-tag="市民">市民</button>
+            </div>
+          </div>
+          <p class="char-summary">
+            <span class="kv-label">概要</span>
+            <span class="kv-value">
+              ソラン料理屋「イーフン飯店」の店員。ユームの妹。片言のアルディア語を話すが、地頭は良く、後にヘリエン国立大学院を目指して猛勉強する。客の注文を無視して炒飯（チャハン）を出すのがお約束。
+            </span>
+          </p>
+          <p class="char-quote">
+            <span class="kv-label">名言</span>
+            <span class="kv-value">
+              <span class="quote-mark">「</span>
+              <span class="quote-text">チャハン、ヨン、オワル</span>
+              <span class="quote-mark">」</span>
+            </span>
+          </p>
+          <p class="char-oshii">
+            <span class="kv-label">推しポイント</span>
+            <span class="kv-value">
+              ・Hシリーズのマスコット兼癒やし枠🍜 どんな深刻なシーンでも炒飯を出してくるブレなさが安心する。<br />
+              ・サテラに勉強を教わりながら大学院を目指す努力家な一面も。「モエル、フエル、デンキ、ツクル（高速増殖炉）」の回答が可愛すぎる。
+            </span>
+          </p>
+        </article>
+
+        <!-- ▼ シナン・アルスノーヴァ -->
+        <article
+          class="char-card"
+          data-name="シナン・アルスノーヴァ"
+          data-works="H-EP0, H-EP3, H-EP5, H-EP9, H-EP12, EP'99"
+          data-tags="五天"
+        >
+          <h2 class="char-name">
+            シナン・アルスノーヴァ
+            <span class="char-name-sub">（サウソスのヒーロー / 五天ファルネド）</span>
+          </h2>
+          <p class="kv-row">
+            <span class="kv-label">登場作品</span>
+            <span class="kv-value">ハーロピノン共和国物語 H-EP0～EP'99</span>
+          </p>
+          <div class="char-tags kv-row">
+            <span class="kv-label">タグ</span>
+            <div class="kv-value">
+              <button class="tag-pill" type="button" data-tag="五天">五天</button>
+            </div>
+          </div>
+          <p class="char-summary">
+            <span class="kv-label">概要</span>
+            <span class="kv-value">
+              五天の下位神官（ファルネド）でありながら、特攻服を着て街の治安を守る「ヒーロー」。ミナツの姉。組織の穏健派として、過激派（トーア）やマンツァルと対立。「アルスノーヴァ・パンチ（関節技）」などの肉弾戦が得意。H-EP3では妹ミナツと対決するも和解し、共に街を守ることを誓う。
+            </span>
+          </p>
+          <p class="char-quote">
+            <span class="kv-label">名言</span>
+            <span class="kv-value">
+              <span class="quote-mark">「</span>
+              <span class="quote-text">我が名はシナン・アルスノーヴァ！五天はファルネドが一人、緋天さまの部下にして、超絶イカすこの街のヒーロー！</span>
+              <span class="quote-mark">」</span>
+            </span>
+          </p>
+          <p class="char-oshii">
+            <span class="kv-label">推しポイント</span>
+            <span class="kv-value">
+              ・マフィアなのに正義の味方という矛盾を全力でやり切る姿が熱い🔥<br />
+              ・H-EP11（過去編）でアルカに利用された過去を持つが、それでも腐らずに自分の信じる「正義」を貫いているのが尊い。<br />
+              ・ミナツに対するシスコンっぷりが微笑ましい。
+            </span>
+          </p>
+        </article>
+
+        <!-- ▼ レト -->
+        <article
+          class="char-card"
+          data-name="レト"
+          data-works="H-EP0, H-EP1, H-EP7, H-EP9"
+          data-tags="エルテーナ,君主制保全省,西アルトス研究会"
+        >
+          <h2 class="char-name">
+            レト
+            <span class="char-name-sub">（レト・ラウワ / エルテーナ大宰相）</span>
+          </h2>
+          <p class="kv-row">
+            <span class="kv-label">登場作品</span>
+            <span class="kv-value">ハーロピノン共和国物語 H-EP0～H-EP9</span>
+          </p>
+          <div class="char-tags kv-row">
+            <span class="kv-label">タグ</span>
+            <div class="kv-value">
+              <button class="tag-pill" type="button" data-tag="エルテーナ">エルテーナ</button>
+              <button class="tag-pill" type="button" data-tag="君主制保全省">君主制保全省</button>
+              <button class="tag-pill" type="button" data-tag="西アルトス研究会">西アルトス研究会</button>
+            </div>
+          </div>
+          <p class="char-summary">
+            <span class="kv-label">概要</span>
+            <span class="kv-value">
+              ヘリエン国立大学の留学生。「西アルトス研究会」の常識人枠。その正体はエルテーナ連合「君主制保全省」の職員であり、後の大宰相。H-EP7にて公務のため帰国するも、仲間たちの説得とカレイの介入によりヘリエンへ帰還。常に冷静沈着な参謀役。
+            </span>
+          </p>
+          <p class="char-quote">
+            <span class="kv-label">名言</span>
+            <span class="kv-value">
+              <span class="quote-mark">「</span>
+              <span class="quote-text">ディベートは“相手より広い視点を提示した方が勝つ競技”だ</span>
+              <span class="quote-mark">」</span>
+            </span>
+          </p>
+          <p class="char-oshii">
+            <span class="kv-label">推しポイント</span>
+            <span class="kv-value">
+              ・サークルのおかんポジション。ミナツやファタのボケを捌きつつ、アリーを支える姿が頼もしい👓<br />
+              ・H-EP5でアリーにディベートの極意を教えるシーンは、彼自身の知性と「広い視点」を持つ政治家としての素質が垣間見えて最高。<br />
+              ・大宰相という重責を背負いながらも、学生としての青春を選ぶ決断がエモい。
+            </span>
+          </p>
+        </article>
+
+        <!-- ▼ アリー・ナミレ -->
+        <article
+          class="char-card"
+          data-name="アリー・ナミレ"
+          data-works="H-EP1, H-EP5, H-EP7, H-EP9"
+          data-tags="エルテーナ,君主制保全省,西アルトス研究会"
+        >
+          <h2 class="char-name">
+            アリー・ナミレ
+            <span class="char-name-sub">（アリー・レネティ / レネティ公主）</span>
+          </h2>
+          <p class="kv-row">
+            <span class="kv-label">登場作品</span>
+            <span class="kv-value">ハーロピノン共和国物語 H-EP1～H-EP9</span>
+          </p>
+          <div class="char-tags kv-row">
+            <span class="kv-label">タグ</span>
+            <div class="kv-value">
+              <button class="tag-pill" type="button" data-tag="エルテーナ">エルテーナ</button>
+              <button class="tag-pill" type="button" data-tag="君主制保全省">君主制保全省</button>
+              <button class="tag-pill" type="button" data-tag="西アルトス研究会">西アルトス研究会</button>
+            </div>
+          </div>
+          <p class="char-summary">
+            <span class="kv-label">概要</span>
+            <span class="kv-value">
+              ヘリエン国立大学の留学生。正体はエルテーナ連合ペスタート公主国の公主。ファタたちと共にサークル活動を楽しむが、H-EP7で戴冠のため帰国。しかし、トットの監視をファタとの「狂言決闘」で欺き、自由を勝ち取ってヘリエンへ戻る。H-EP5ではハルとのディベートで「新しい路上のあり方」を提言し、勝利した。
+            </span>
+          </p>
+          <p class="char-quote">
+            <span class="kv-label">名言</span>
+            <span class="kv-value">
+              <span class="quote-mark">「</span>
+              <span class="quote-text">このバランスが、この建物を支えているんだと、そう思いませんか？</span>
+              <span class="quote-mark">」</span>
+            </span>
+          </p>
+          <p class="char-oshii">
+            <span class="kv-label">推しポイント</span>
+            <span class="kv-value">
+              ・気品と行動力を兼ね備えたプリンセス👑 H-EP7でのファタとの「阿吽の呼吸」による演技は見事。<br />
+              ・「正しいだけでは勝てない」ことを学び、ハルにリベンジを果たす成長物語が熱い。<br />
+              ・趣味が写真撮影で、仲間たちの思い出を残そうとする姿が健気。
+            </span>
+          </p>
+        </article>
+
+        <!-- ▼ ラカン・ファタ -->
+        <article
+          class="char-card"
+          data-name="ラカン・ファタ"
+          data-works="H-EP1, H-EP3, H-EP5, H-EP7, ブックキーパー"
+          data-tags="中庸の構え,西アルトス研究会"
+        >
+          <h2 class="char-name">
+            ラカン・ファタ
+            <span class="char-name-sub">（三代目キナベイ / 警察官僚志望）</span>
+          </h2>
+          <p class="kv-row">
+            <span class="kv-label">登場作品</span>
+            <span class="kv-value">ハーロピノン共和国物語 H-EP1～ / ブックキーパー</span>
+          </p>
+          <div class="char-tags kv-row">
+            <span class="kv-label">タグ</span>
+            <div class="kv-value">
+              <button class="tag-pill" type="button" data-tag="中庸の構え">中庸の構え</button>
+              <button class="tag-pill" type="button" data-tag="西アルトス研究会">西アルトス研究会</button>
+            </div>
+          </div>
+          <p class="char-summary">
+            <span class="kv-label">概要</span>
+            <span class="kv-value">
+              カラベイからの留学生。ラカン・ライの孫、ラカン・サイの息子。「パラジェイのナイフ」を巡る事件でミナツたちと出会う。父譲りの正義感と、祖父譲りの剣才（中庸の構え）を持つ。H-EP7ではアリー奪還のためにアーケイへ乗り込み、体を張った演技を見せた。後にカラベイ警察のキャリアとなる。
+            </span>
+          </p>
+          <p class="char-quote">
+            <span class="kv-label">名言</span>
+            <span class="kv-value">
+              <span class="quote-mark">「</span>
+              <span class="quote-text">ぼくの命を賭しても、ミナツはぼくが守る！</span>
+              <span class="quote-mark">」</span>
+            </span>
+          </p>
+          <p class="char-oshii">
+            <span class="kv-label">推しポイント</span>
+            <span class="kv-value">
+              ・血統書付きの主人公！ライ→サイ→ファタと受け継がれる「護るための剣」の系譜が尊い⚔️<br />
+              ・ミナツとのバカップルぶりが最高。天然タラシな一面もありつつ、決める時はバシッと決めるイケメン。<br />
+              ・H-EP3で「無心の構え」を覚醒させ、エイグレを制圧するシーンの成長速度が凄まじい。
+            </span>
+          </p>
+        </article>
+
+        <!-- ▼ ミナツ・アルスノーヴァ -->
+        <article
+          class="char-card"
+          data-name="ミナツ・アルスノーヴァ"
+          data-works="H-EP1, H-EP3, H-EP7, H-EP12, ブックキーパー"
+          data-tags="中庸の構え,西アルトス研究会"
+        >
+          <h2 class="char-name">
+            ミナツ・アルスノーヴァ
+            <span class="char-name-sub">（西アルトス研究会会長 / 同人作家）</span>
+          </h2>
+          <p class="kv-row">
+            <span class="kv-label">登場作品</span>
+            <span class="kv-value">ハーロピノン共和国物語 H-EP1～ / ブックキーパー</span>
+          </p>
+          <div class="char-tags kv-row">
+            <span class="kv-label">タグ</span>
+            <div class="kv-value">
+              <button class="tag-pill" type="button" data-tag="中庸の構え">中庸の構え</button>
+              <button class="tag-pill" type="button" data-tag="西アルトス研究会">西アルトス研究会</button>
+            </div>
+          </div>
+          <p class="char-summary">
+            <span class="kv-label">概要</span>
+            <span class="kv-value">
+              「西アルトス研究会」会長。シナンの妹。オタク気質で同人活動（主にタネイ×アカウ）に勤しむが、実は我流で「中庸の構え」を使いこなす実力者。H-EP3で姉シナンと対決し和解。H-EP7ではトットをボコボコにするなど戦闘力は高い。後にファタと結婚し「ラカン・ア・ミナツ」となる。
+            </span>
+          </p>
+          <p class="char-quote">
+            <span class="kv-label">名言</span>
+            <span class="kv-value">
+              <span class="quote-mark">「</span>
+              <span class="quote-text">これが『2本目』っす！</span>
+              <span class="quote-mark">」</span>
+            </span>
+          </p>
+          <p class="char-oshii">
+            <span class="kv-label">推しポイント</span>
+            <span class="kv-value">
+              ・ムードメーカーにして最強のトリックスター！「～っす」口調と明るい性格でHシリーズを牽引する太陽のような存在☀️<br />
+              ・ファタへの愛が一直線すぎて可愛い。「未亡人」の意味を勘違いして泣きつくシーンなどは名場面。<br />
+              ・コトやアーシャとも渡り合える胆力を持つ、ある意味最強の一般人。
+            </span>
+          </p>
+        </article>
+
+        <!-- ==================== ハーロピノン共和国物語（中盤～過去編） ==================== -->
+
+        <!-- ▼ クラ・モグロイ -->
+        <article
+          class="char-card"
+          data-name="クラ・モグロイ"
+          data-works="H-EP4, H-EP5, H-EP9, H-EP11, H-EP12"
+          data-tags="西アルトス研究会"
+        >
+          <h2 class="char-name">
+            クラ・モグロイ
+            <span class="char-name-sub">（ドゥルグァタンからの歌姫）</span>
+          </h2>
+          <p class="kv-row">
+            <span class="kv-label">登場作品</span>
+            <span class="kv-value">ハーロピノン共和国物語 H-EP4～H-EP12</span>
+          </p>
+          <div class="char-tags kv-row">
+            <span class="kv-label">タグ</span>
+            <div class="kv-value">
+              <button class="tag-pill" type="button" data-tag="西アルトス研究会">西アルトス研究会</button>
+            </div>
+          </div>
+          <p class="char-summary">
+            <span class="kv-label">概要</span>
+            <span class="kv-value">
+              ヘリエン国立大学の学生。「路上営業規制法」で弾圧されそうになったところをアリーたちと出会い、「西アルトス研究会」に入会。ホーミー（喉歌）とギターを駆使し、社会風刺からバラードまで歌い上げる。H-EP9ではシユウの苦悩を知り、彼女へ贈る歌『線の向こうで』を作った。
+            </span>
+          </p>
+          <p class="char-quote">
+            <span class="kv-label">名言</span>
+            <span class="kv-value">
+              <span class="quote-mark">「</span>
+              <span class="quote-text">あなたの居場所は　ここにある（『線の向こうで』）</span>
+              <span class="quote-mark">」</span>
+            </span>
+          </p>
+          <p class="char-oshii">
+            <span class="kv-label">推しポイント</span>
+            <span class="kv-value">
+              ・歌声で人の心を繋ぐバード（吟遊詩人）ポジション！🎤<br />
+              ・アリーが「路上」を守るために戦うきっかけとなったヒロイン。<br />
+              ・シユウ先生への想いを歌にした『線の向こうで』は、Hシリーズ屈指の泣ける名曲😭
+            </span>
+          </p>
+        </article>
+
+        <!-- ▼ ハル・ペロート -->
+        <article
+          class="char-card"
+          data-name="ハル・ペロート"
+          data-works="H-EP4, H-EP5, H-EP7, H-EP9, H-EP12"
+          data-tags="西アルトス研究会"
+        >
+          <h2 class="char-name">
+            ハル・ペロート
+            <span class="char-name-sub">（論理武装のスイーツ女子 / 弁護士志望）</span>
+          </h2>
+          <p class="kv-row">
+            <span class="kv-label">登場作品</span>
+            <span class="kv-value">ハーロピノン共和国物語 H-EP4～H-EP12</span>
+          </p>
+          <div class="char-tags kv-row">
+            <span class="kv-label">タグ</span>
+            <div class="kv-value">
+              <button class="tag-pill" type="button" data-tag="西アルトス研究会">西アルトス研究会</button>
+            </div>
+          </div>
+          <p class="char-summary">
+            <span class="kv-label">概要</span>
+            <span class="kv-value">
+              ディベートの天才。当初は「規制賛成派」としてアリーの前に立ちはだかるが、サシィクの味に釣られて？「西アルトス研究会」と交流を深め、良きライバルとなる。H-EP7ではアリー奪還のために共闘。H-EP12ではフル・ソムニオルムと対決し、論理と情熱で勝利する。無類の甘党で大食い。
+            </span>
+          </p>
+          <p class="char-quote">
+            <span class="kv-label">名言</span>
+            <span class="kv-value">
+              <span class="quote-mark">「</span>
+              <span class="quote-text">あと10枚はいける（キレメーン大食い大会にて）</span>
+              <span class="quote-mark">」</span>
+            </span>
+          </p>
+          <p class="char-oshii">
+            <span class="kv-label">推しポイント</span>
+            <span class="kv-value">
+              ・クールな論客なのに、食べ物が絡むとポンコツ化する可愛さがズルい🍰<br />
+              ・「正しいだけ」だった彼女が、アリーとの対決を経て「人の想い」を論理に乗せることを学び、最強の弁護士へと成長していく過程が熱い！🔥
+            </span>
+          </p>
+        </article>
+
+        <!-- ▼ トーア・セクメト -->
+        <article
+          class="char-card"
+          data-name="トーア・セクメト"
+          data-works="H-EP4, H-EP5"
+          data-tags="五天"
+        >
+          <h2 class="char-name">
+            トーア・セクメト
+            <span class="char-name-sub">（五天ファルネド / 過激派）</span>
+          </h2>
+          <p class="kv-row">
+            <span class="kv-label">登場作品</span>
+            <span class="kv-value">ハーロピノン共和国物語 H-EP4～H-EP5</span>
+          </p>
+          <div class="char-tags kv-row">
+            <span class="kv-label">タグ</span>
+            <div class="kv-value">
+              <button class="tag-pill" type="button" data-tag="五天">五天</button>
+            </div>
+          </div>
+          <p class="char-summary">
+            <span class="kv-label">概要</span>
+            <span class="kv-value">
+              五天の武闘派幹部。コト（青天）の威を借りてヘリエンでの勢力拡大を図り、穏健派のシナンと対立。脱法ドラッグの販売など汚いシノギを行う。H-EP5にてシナン・ミナツ・ファタの連携に敗れ、最後はコトのナイフの雨に沈む。
+            </span>
+          </p>
+          <p class="char-quote">
+            <span class="kv-label">名言</span>
+            <span class="kv-value">
+              <span class="quote-mark">「</span>
+              <span class="quote-text">さあ、『頂点』を決めよう！</span>
+              <span class="quote-mark">」</span>
+            </span>
+          </p>
+          <p class="char-oshii">
+            <span class="kv-label">推しポイント</span>
+            <span class="kv-value">
+              ・「力こそ全て」を地で行くヴィラン。彼女の暴力性が、シナンたちの「守るための力」との対比になっている。<br />
+              ・コトに見捨てられる最期のあっけなさが、組織の非情さを物語っていて良い味を出している。
+            </span>
+          </p>
+        </article>
+
+        <!-- ▼ トット・ケルンズ -->
+        <article
+          class="char-card"
+          data-name="トット・ケルンズ"
+          data-works="H-EP7"
+          data-tags="エルテーナ,君主制保全省"
+        >
+          <h2 class="char-name">
+            トット・ケルンズ
+            <span class="char-name-sub">（君主制保全省警備局長）</span>
+          </h2>
+          <p class="kv-row">
+            <span class="kv-label">登場作品</span>
+            <span class="kv-value">ハーロピノン共和国物語 H-EP7</span>
+          </p>
+          <div class="char-tags kv-row">
+            <span class="kv-label">タグ</span>
+            <div class="kv-value">
+              <button class="tag-pill" type="button" data-tag="エルテーナ">エルテーナ</button>
+              <button class="tag-pill" type="button" data-tag="君主制保全省">君主制保全省</button>
+            </div>
+          </div>
+          <p class="char-summary">
+            <span class="kv-label">概要</span>
+            <span class="kv-value">
+              アリーとレトの監視役。君主制保全省の右派筆頭。共和主義に染まりかけた二人を連れ戻そうとするが、アーケイのホテルにてミナツの猛攻を受け、さらにカレイの介入により敗北。「あるべき君主」への忠誠心は本物だったが、若者たちの熱意と策略に屈した。
+            </span>
+          </p>
+          <p class="char-quote">
+            <span class="kv-label">名言</span>
+            <span class="kv-value">
+              <span class="quote-mark">「</span>
+              <span class="quote-text">レネティ公主、これで共和主義者の誘惑は断ち切れましたか</span>
+              <span class="quote-mark">」</span>
+            </span>
+          </p>
+          <p class="char-oshii">
+            <span class="kv-label">推しポイント</span>
+            <span class="kv-value">
+              ・堅物のお目付け役。ミナツ（一般人）にタコ殴りにされるシーンは可哀想だけどスカッとする名場面。<br />
+              ・彼もまた「国のため」を思って動いていたという意味では、憎みきれない悪役。
+            </span>
+          </p>
+        </article>
+
+        <!-- ▼ ダヒア・オプファー -->
+        <article
+          class="char-card"
+          data-name="ダヒア・オプファー"
+          data-works="H-EP8, H-EP9, H-EP10, H-EP11"
+          data-tags="マンツァル,サイト"
+        >
+          <h2 class="char-name">
+            ダヒア・オプファー
+            <span class="char-name-sub">（悲劇のヒロイン / サイト二世信者）</span>
+          </h2>
+          <p class="kv-row">
+            <span class="kv-label">登場作品</span>
+            <span class="kv-value">ハーロピノン共和国物語 H-EP8～H-EP11</span>
+          </p>
+          <div class="char-tags kv-row">
+            <span class="kv-label">タグ</span>
+            <div class="kv-value">
+              <button class="tag-pill" type="button" data-tag="マンツァル">マンツァル</button>
+              <button class="tag-pill" type="button" data-tag="サイト">サイト</button>
+            </div>
+          </div>
+          <p class="char-summary">
+            <span class="kv-label">概要</span>
+            <span class="kv-value">
+              「西アルトス研究会」の元メンバー。父アルヤニ（マンツァル）と母（サイト）に翻弄され、貧困と宗教的虐待の中で育つ。エスティに恋をするも、アルカの策略によりサークルを去る。H-EP9でグリュックウイルスに感染し、父に治療を拒否されるが、シユウの決死の治療により一命を取り留める。
+            </span>
+          </p>
+          <p class="char-quote">
+            <span class="kv-label">名言</span>
+            <span class="kv-value">
+              <span class="quote-mark">「</span>
+              <span class="quote-text">みんなと、ゆめみたい</span>
+              <span class="quote-mark">」</span>
+            </span>
+          </p>
+          <p class="char-oshii">
+            <span class="kv-label">推しポイント</span>
+            <span class="kv-value">
+              ・幸薄い系女子の極み…😭 彼女の幸せを願わずにはいられない。<br />
+              ・過去編での健気な姿と、H-EP9での瀕死の状態が対比されて辛い。シユウが医師としての道を外れてでも救いたかった「希望」そのもの。
+            </span>
+          </p>
+        </article>
+
+        <!-- ▼ アルヤニ・オプファー -->
+        <article
+          class="char-card"
+          data-name="アルヤニ・オプファー"
+          data-works="H-EP8, H-EP9, H-EP10, H-EP11"
+          data-tags="西アルトス研究会,サイト"
+        >
+          <h2 class="char-name">
+            アルヤニ・オプファー
+            <span class="char-name-sub">（ダヒアの父 / 狂信者）</span>
+          </h2>
+          <p class="kv-row">
+            <span class="kv-label">登場作品</span>
+            <span class="kv-value">ハーロピノン共和国物語 H-EP8～H-EP11</span>
+          </p>
+          <div class="char-tags kv-row">
+            <span class="kv-label">タグ</span>
+            <div class="kv-value">
+              <button class="tag-pill" type="button" data-tag="西アルトス研究会">西アルトス研究会</button>
+              <button class="tag-pill" type="button" data-tag="サイト">サイト</button>
+            </div>
+          </div>
+          <p class="char-summary">
+            <span class="kv-label">概要</span>
+            <span class="kv-value">
+              ダヒアの父。かつてはマンツァルの活動家として家庭を顧みず、妻を宗教に走らせた元凶。自身もサイトに入信し、娘の治療を「悲劇の完成」のために拒否する。シナンにボコボコにされ、最後はシユウによって復讐の「脚本」の主役に仕立て上げられ、廃人と化す。
+            </span>
+          </p>
+          <p class="char-quote">
+            <span class="kv-label">名言</span>
+            <span class="kv-value">
+              <span class="quote-mark">「</span>
+              <span class="quote-text">わたしたちは！悲劇の主人公だ！</span>
+              <span class="quote-mark">」</span>
+            </span>
+          </p>
+          <p class="char-oshii">
+            <span class="kv-label">推しポイント</span>
+            <span class="kv-value">
+              ・Hシリーズ最悪の毒親にして狂人💀 彼の歪んだ信仰とエゴが、シユウを闇に落とす最後の引き金となった。<br />
+              ・シナンとの雪の中での殴り合いは、理屈の通じない狂気VS感情の拳という構図が壮絶。
+            </span>
+          </p>
+        </article>
+
+        <!-- ▼ エルス・マ・ヌガーシャ -->
+        <article
+          class="char-card"
+          data-name="エルス・マ・ヌガーシャ"
+          data-works="H-EP10, H-EP11, クロスボーダー"
+          data-tags="西アルトス研究会"
+        >
+          <h2 class="char-name">
+            エルス・マ・ヌガーシャ
+            <span class="char-name-sub">（デルタイ国王 / シナンの師匠）</span>
+          </h2>
+          <p class="kv-row">
+            <span class="kv-label">登場作品</span>
+            <span class="kv-value">ハーロピノン共和国物語 過去編 / クロスボーダー</span>
+          </p>
+          <div class="char-tags kv-row">
+            <span class="kv-label">タグ</span>
+            <div class="kv-value">
+              <button class="tag-pill" type="button" data-tag="西アルトス研究会">西アルトス研究会</button>
+            </div>
+          </div>
+          <p class="char-summary">
+            <span class="kv-label">概要</span>
+            <span class="kv-value">
+              1990年当時の「西アルトス研究会」メンバー。正体はデルタイのマ・ヌガーシャ朝の王族（後の国王）。喧嘩っ早いが情に厚く、シナンから「師匠」と慕われる。ユームがサークルを解散しようとした際、拳で語り合って引き止めた。後にデルタイ国王として内戦を戦うことになる。
+            </span>
+          </p>
+          <p class="char-quote">
+            <span class="kv-label">名言</span>
+            <span class="kv-value">
+              <span class="quote-mark">「</span>
+              <span class="quote-text">しゃらくせえ！昂った気持ちを四肢に込めろ！</span>
+              <span class="quote-mark">」</span>
+            </span>
+          </p>
+          <p class="char-oshii">
+            <span class="kv-label">推しポイント</span>
+            <span class="kv-value">
+              ・王族なのにサシィク焼かされてる姿がシュール👑<br />
+              ・ステゴロ最強！理屈っぽいユームに対して、拳と心でぶつかる熱血漢ぶりがカッコいい。<br />
+              ・『クロスボーダー』で「タマなし野郎」と罵られている彼が、学生時代はこんなに熱かったというギャップ萌え。
+            </span>
+          </p>
+        </article>
+
+        <!-- ▼ ユーム・ハルツ -->
+        <article
+          class="char-card"
+          data-name="ユーム・ハルツ"
+          data-works="H-EP10, H-EP11"
+          data-tags="無心の構え,狂暴の構え,西アルトス研究会"
+        >
+          <h2 class="char-name">
+            ユーム・ハルツ
+            <span class="char-name-sub">（西アルトス研究会二代目会長）</span>
+          </h2>
+          <p class="kv-row">
+            <span class="kv-label">登場作品</span>
+            <span class="kv-value">ハーロピノン共和国物語 過去編</span>
+          </p>
+          <div class="char-tags kv-row">
+            <span class="kv-label">タグ</span>
+            <div class="kv-value">
+              <button class="tag-pill" type="button" data-tag="無心の構え">無心の構え</button>
+              <button class="tag-pill" type="button" data-tag="狂暴の構え">狂暴の構え</button>
+              <button class="tag-pill" type="button" data-tag="西アルトス研究会">西アルトス研究会</button>
+            </div>
+          </div>
+          <p class="char-summary">
+            <span class="kv-label">概要</span>
+            <span class="kv-value">
+              モンの兄。アルカが作った幽霊サークルを立て直した苦労人。剣術の達人で、「無心の構え」を使いこなす。アルカの策略によって仲間が傷つくのを恐れ、自ら悪役となってサークルを解散させようとしたが、エルスに阻止される。料理上手。
+            </span>
+          </p>
+          <p class="char-quote">
+            <span class="kv-label">名言</span>
+            <span class="kv-value">
+              <span class="quote-mark">「</span>
+              <span class="quote-text">あなたのパペットショーはここで終わりです</span>
+              <span class="quote-mark">」</span>
+            </span>
+          </p>
+          <p class="char-oshii">
+            <span class="kv-label">推しポイント</span>
+            <span class="kv-value">
+              ・苦労人ポジションのお兄ちゃん。アルカの企みに気づき、たった一人で立ち向かおうとした正義感と責任感が尊い。<br />
+              ・彼が残した「奇跡を大切にしてください」という手紙が、ミナツたち次世代に受け継がれていくのがエモい✉️
+            </span>
+          </p>
+        </article>
+
+        <!-- ▼ エスティ・シュメルマルク -->
+        <article
+          class="char-card"
+          data-name="エスティ・シュメルマルク"
+          data-works="H-EP10, H-EP11"
+          data-tags="西アルトス研究会"
+        >
+          <h2 class="char-name">
+            エスティ・シュメルマルク
+            <span class="char-name-sub">（アルカの元カレ / 宇宙オタク）</span>
+          </h2>
+          <p class="kv-row">
+            <span class="kv-label">登場作品</span>
+            <span class="kv-value">ハーロピノン共和国物語 過去編</span>
+          </p>
+          <div class="char-tags kv-row">
+            <span class="kv-label">タグ</span>
+            <div class="kv-value">
+              <button class="tag-pill" type="button" data-tag="西アルトス研究会">西アルトス研究会</button>
+            </div>
+          </div>
+          <p class="char-summary">
+            <span class="kv-label">概要</span>
+            <span class="kv-value">
+              花屋で働く青年。宇宙開発に興味があり、サークルに出入りするようになる。アルカ（ラティア）と恋人関係になるが、借金のため敵対組織「ミカーラ」に入る。H-EP11では、アルカを庇ってエイグレと戦い、彼女と共に逃亡。アルカの「空虚」を一時でも埋めた唯一の人物。
+            </span>
+          </p>
+          <p class="char-quote">
+            <span class="kv-label">名言</span>
+            <span class="kv-value">
+              <span class="quote-mark">「</span>
+              <span class="quote-text">きみがなにを企んでいようとも、ぼくはきみとともに罪を背負う！</span>
+              <span class="quote-mark">」</span>
+            </span>
+          </p>
+          <p class="char-oshii">
+            <span class="kv-label">推しポイント</span>
+            <span class="kv-value">
+              ・アルカ（ラティア）に愛された男。彼の純粋さが、冷徹なアルカの心を溶かした奇跡✨<br />
+              ・「チョウザメ夫妻のペアストラップ」のエピソードが甘酸っぱくて切ない。<br />
+              ・彼との別れが、アルカを「虚神」へと変えてしまったのかもしれない…
+            </span>
+          </p>
+        </article>
+
+        <!-- ▼ フル・ソムニオルム -->
+        <article
+          class="char-card"
+          data-name="フル・ソムニオルム"
+          data-works="H-EP12"
+          data-tags="市民"
+        >
+          <h2 class="char-name">
+            フル・ソムニオルム
+            <span class="char-name-sub">（レアリア社社長 / 実利主義者）</span>
+          </h2>
+          <p class="kv-row">
+            <span class="kv-label">登場作品</span>
+            <span class="kv-value">ハーロピノン共和国物語 H-EP12</span>
+          </p>
+          <div class="char-tags kv-row">
+            <span class="kv-label">タグ</span>
+            <div class="kv-value">
+              <button class="tag-pill" type="button" data-tag="市民">市民</button>
+            </div>
+          </div>
+          <p class="char-summary">
+            <span class="kv-label">概要</span>
+            <span class="kv-value">
+              就職エージェント「レアリア社」の社長。貧しい生い立ちから、「研究よりも明日の食卓」を重視する実利主義者となる。大学の研究機能を縮小させる法案を巡り、ハルと討論を行う。ハルの「未来への投資」論に敗れ、その後シナンにシマ荒らしの落とし前をつけさせられた。
+            </span>
+          </p>
+          <p class="char-quote">
+            <span class="kv-label">名言</span>
+            <span class="kv-value">
+              <span class="quote-mark">「</span>
+              <span class="quote-text">十年後？ここのみんな、明日の給料の方が大事なんですよ！</span>
+              <span class="quote-mark">」</span>
+            </span>
+          </p>
+          <p class="char-oshii">
+            <span class="kv-label">推しポイント</span>
+            <span class="kv-value">
+              ・ハルのライバル役として、ある種の「正論（現実）」を突きつける存在。<br />
+              ・彼の主張もまた、貧困に喘ぐ市民のリアルな声であり、完全な悪とは言い切れない深みがある。<br />
+              ・最後はシナンにボコられて撤退する様式美も完備。
+            </span>
+          </p>
+        </article>
+
+        <!-- ==================== アビバーヴァク共和国物語（Aシリーズ） ==================== -->
+
+        <!-- ▼ カーヌーン・カ・シャーサン -->
+        <article
+          class="char-card"
+          data-name="カーヌーン・カ・シャーサン"
+          data-works="A-EP1, A-EP2, A-EP3, A-EP4"
+          data-tags="タラヴァー"
+        >
+          <h2 class="char-name">
+            カーヌーン・カ・シャーサン
+            <span class="char-name-sub">（聖旗手 / 四つ目のカーヌーン）</span>
+          </h2>
+          <p class="kv-row">
+            <span class="kv-label">登場作品</span>
+            <span class="kv-value">アビバーヴァク共和国物語 A-EP1～A-EP4</span>
+          </p>
+          <div class="char-tags kv-row">
+            <span class="kv-label">タグ</span>
+            <div class="kv-value">
+              <button class="tag-pill" type="button" data-tag="タラヴァー">タラヴァー</button>
+            </div>
+          </div>
+          <p class="char-summary">
+            <span class="kv-label">概要</span>
+            <span class="kv-value">
+              アビバーヴァク市の占い師の娘。アラ派に母を殺され、街を取り戻すために武装組織「タラヴァー」の「聖旗手」となる。歌と旗で民衆を鼓舞し、街を解放するが、次第に理想のために独裁的になり、異論を排除する「魔女」へと変貌。最後はナカリーの手によって幕を引かれる。
+            </span>
+          </p>
+          <p class="char-quote">
+            <span class="kv-label">名言</span>
+            <span class="kv-value">
+              <span class="quote-mark">「</span>
+              <span class="quote-text">わたしの物語について来る覚悟のあるものは、武器を手に取れ！</span>
+              <span class="quote-mark">」</span>
+            </span>
+          </p>
+          <p class="char-oshii">
+            <span class="kv-label">推しポイント</span>
+            <span class="kv-value">
+              ・普通の少女が「英雄」に祭り上げられ、やがて「怪物」にならざるを得なかった悲劇のヒロイン。<br />
+              ・アークへの恋心や母への想いを押し殺して戦う姿が痛々しくも美しい。<br />
+              ・最期に聞こえた母の声と「はーい！いまいくね！」という無邪気な返事が、救いであり最大の涙腺崩壊ポイント😭
+            </span>
+          </p>
+        </article>
+
+        <!-- ▼ スヴァルグ・ラーヴァナ -->
+        <article
+          class="char-card"
+          data-name="スヴァルグ・ラーヴァナ"
+          data-works="A-EP1, A-EP2, A-EP4"
+          data-tags="タラヴァー,五天"
+        >
+          <h2 class="char-name">
+            スヴァルグ・ラーヴァナ
+            <span class="char-name-sub">（ナカーブ商会店主 / 五天ファルネド）</span>
+          </h2>
+          <p class="kv-row">
+            <span class="kv-label">登場作品</span>
+            <span class="kv-value">アビバーヴァク共和国物語 A-EP1～A-EP4</span>
+          </p>
+          <div class="char-tags kv-row">
+            <span class="kv-label">タグ</span>
+            <div class="kv-value">
+              <button class="tag-pill" type="button" data-tag="タラヴァー">タラヴァー</button>
+              <button class="tag-pill" type="button" data-tag="五天">五天</button>
+            </div>
+          </div>
+          <p class="char-summary">
+            <span class="kv-label">概要</span>
+            <span class="kv-value">
+              よろず屋「ナカーブ商会」の主人。カーヌーンの良き理解者として振る舞うが、正体は五天の構成員。タラヴァーを裏から支援し、五天の利益のために利用していた。しかし、カーヌーンへの情は本物であり、A-EP4では彼女を止めようとするも、白梟（アカウ）に暗殺される。
+            </span>
+          </p>
+          <p class="char-quote">
+            <span class="kv-label">名言</span>
+            <span class="kv-value">
+              <span class="quote-mark">「</span>
+              <span class="quote-text">おうおう、指輪を買うときはナカーブ商会を頼ってくれよ</span>
+              <span class="quote-mark">」</span>
+            </span>
+          </p>
+          <p class="char-oshii">
+            <span class="kv-label">推しポイント</span>
+            <span class="kv-value">
+              ・頼れる姉御肌…に見せかけた黒幕側の人間。それでもカーヌーンを愛おしく思う気持ちに嘘はなかったと信じたい。<br />
+              ・最期にカーヌーンに撃たれる覚悟を決めていたシーンが切ない。
+            </span>
+          </p>
+        </article>
+
+        <!-- ▼ ブブマ・トルヴァス -->
+        <article
+          class="char-card"
+          data-name="ブブマ・トルヴァス"
+          data-works="A-EP1, A-EP2, A-EP3"
+          data-tags="五天"
+        >
+          <h2 class="char-name">
+            ブブマ・トルヴァス
+            <span class="char-name-sub">（ナカーブ商会社長 / 先代緑天）</span>
+          </h2>
+          <p class="kv-row">
+            <span class="kv-label">登場作品</span>
+            <span class="kv-value">アビバーヴァク共和国物語 A-EP1～A-EP3</span>
+          </p>
+          <div class="char-tags kv-row">
+            <span class="kv-label">タグ</span>
+            <div class="kv-value">
+              <button class="tag-pill" type="button" data-tag="五天">五天</button>
+            </div>
+          </div>
+          <p class="char-summary">
+            <span class="kv-label">概要</span>
+            <span class="kv-value">
+              ナカーブ商会の社長にして、五天の幹部「緑天」。ドゥール（メルディナ地方）での五天の利益拡大を目論み、タラヴァーを組織した。九地との裏取引など老獪な立ち回りで暗躍するが、A-EP3にてキュビの放った刺客により殺害される（キュビによる緑天簒奪）。
+            </span>
+          </p>
+          <p class="char-quote">
+            <span class="kv-label">名言</span>
+            <span class="kv-value">
+              <span class="quote-mark">「</span>
+              <span class="quote-text">みなは他でもないきみの笑顔を活力にしているんだ</span>
+              <span class="quote-mark">」</span>
+            </span>
+          </p>
+          <p class="char-oshii">
+            <span class="kv-label">推しポイント</span>
+            <span class="kv-value">
+              ・カーヌーンを利用しつつも、彼女のカリスマ性を見抜いていた商売人。<br />
+              ・キュビの狂気の前にあっけなく散る「旧世代の悪党」としての最期が印象的。
+            </span>
+          </p>
+        </article>
+
+        <!-- ▼ アーカルシャク・アーダミー -->
+        <article
+          class="char-card"
+          data-name="アーカルシャク・アーダミー"
+          data-works="A-EP1, A-EP2, A-EP3"
+          data-tags="タラヴァー,九地,影梟,無心の構え"
+        >
+          <h2 class="char-name">
+            アーカルシャク・アーダミー
+            <span class="char-name-sub">（アーク / 二代目影梟）</span>
+          </h2>
+          <p class="kv-row">
+            <span class="kv-label">登場作品</span>
+            <span class="kv-value">アビバーヴァク共和国物語 A-EP1～A-EP3</span>
+          </p>
+          <div class="char-tags kv-row">
+            <span class="kv-label">タグ</span>
+            <div class="kv-value">
+              <button class="tag-pill" type="button" data-tag="タラヴァー">タラヴァー</button>
+              <button class="tag-pill" type="button" data-tag="九地">九地</button>
+              <button class="tag-pill" type="button" data-tag="影梟">影梟</button>
+              <button class="tag-pill" type="button" data-tag="無心の構え">無心の構え</button>
+            </div>
+          </div>
+          <p class="char-summary">
+            <span class="kv-label">概要</span>
+            <span class="kv-value">
+              アビバーヴァクの剣術道場師範。カーヌーンの想い人。正体は九地の「影梟」ビライン・アハマ。アパラ（サイ）亡き後の九地を支える実力者。「無心の構え」の使い手。カーヌーンを守るために正体を隠して戦うが、A-EP3にて五天（キュビ）の策略により死亡。彼の死がカーヌーンを修羅の道へ突き落とす。
+            </span>
+          </p>
+          <p class="char-quote">
+            <span class="kv-label">名言</span>
+            <span class="kv-value">
+              <span class="quote-mark">「</span>
+              <span class="quote-text">そんなふうになったら、ぼくが許さないよ</span>
+              <span class="quote-mark">」</span>
+            </span>
+          </p>
+          <p class="char-oshii">
+            <span class="kv-label">推しポイント</span>
+            <span class="kv-value">
+              ・カーヌーンに「戦ってほしくない」と願い続けた優しき剣士⚔️<br />
+              ・彼が生きていれば…というサーガ最大の「if」を感じさせる存在。ビライン家の血筋（アカネイの親戚？）を引いている可能性もあり、設定が深い。
+            </span>
+          </p>
+        </article>
+
+        <!-- ▼ ラーラチー・"アラ"・シャーサク -->
+        <article
+          class="char-card"
+          data-name="ラーラチー・アラ・シャーサク"
+          data-works="A-EP1, A-EP2, A-EP4"
+          data-tags="九地,狂暴の構え"
+        >
+          <h2 class="char-name">
+            ラーラチー・"アラ"・シャーサク
+            <span class="char-name-sub">（九地アラ派指導者）</span>
+          </h2>
+          <p class="kv-row">
+            <span class="kv-label">登場作品</span>
+            <span class="kv-value">アビバーヴァク共和国物語 A-EP1～A-EP4</span>
+          </p>
+          <div class="char-tags kv-row">
+            <span class="kv-label">タグ</span>
+            <div class="kv-value">
+              <button class="tag-pill" type="button" data-tag="九地">九地</button>
+              <button class="tag-pill" type="button" data-tag="狂暴の構え">狂暴の構え</button>
+            </div>
+          </div>
+          <p class="char-summary">
+            <span class="kv-label">概要</span>
+            <span class="kv-value">
+              「九地アラ派」のリーダー。原理主義的な「神の国」を目指す過激派。カーヌーンの母を殺害した張本人。「狂暴の構え」の使い手。A-EP4にてカーヌーンと一騎打ちを行い、圧倒するも、ナカリーの銃撃により死亡。最期まで自らの正義を疑わなかった武人。
+            </span>
+          </p>
+          <p class="char-quote">
+            <span class="kv-label">名言</span>
+            <span class="kv-value">
+              <span class="quote-mark">「</span>
+              <span class="quote-text">円端ののち、こんどは同胞として再会できることを願う</span>
+              <span class="quote-mark">」</span>
+            </span>
+          </p>
+          <p class="char-oshii">
+            <span class="kv-label">推しポイント</span>
+            <span class="kv-value">
+              ・カーヌーンにとっての「母の仇」であり、乗り越えるべき壁。<br />
+              ・悪役だが、宗教的な信念に基づいた行動原理を持っており、ブレない姿勢がある意味魅力的。
+            </span>
+          </p>
+        </article>
+
+        <!-- ▼ アミャハール -->
+        <article
+          class="char-card"
+          data-name="アミャハール"
+          data-works="A-EP3, コンシーラー"
+          data-tags="ピアネーザ"
+        >
+          <h2 class="char-name">
+            アミャハール
+            <span class="char-name-sub">（フルート奏者 / ピアネーザ指揮者）</span>
+          </h2>
+          <p class="kv-row">
+            <span class="kv-label">登場作品</span>
+            <span class="kv-value">アビバーヴァク共和国物語 A-EP3 / コンシーラー</span>
+          </p>
+          <div class="char-tags kv-row">
+            <span class="kv-label">タグ</span>
+            <div class="kv-value">
+              <button class="tag-pill" type="button" data-tag="ピアネーザ">ピアネーザ</button>
+            </div>
+          </div>
+          <p class="char-summary">
+            <span class="kv-label">概要</span>
+            <span class="kv-value">
+              デルタイ内務省警察局特務課「第五号楽団（ピアネーザ）」の指揮者。中性的な容姿の人物。五天を潰すために、敵対するアラ派とも接触し、情報を流すなど手段を選ばない。『コンシーラー』のエルネアたちの上司にあたる重要人物。
+            </span>
+          </p>
+          <p class="char-quote">
+            <span class="kv-label">名言</span>
+            <span class="kv-value">
+              <span class="quote-mark">「</span>
+              <span class="quote-text">『いますぐ五天を潰したい』、その点において、我々の利害は一致する</span>
+              <span class="quote-mark">」</span>
+            </span>
+          </p>
+          <p class="char-oshii">
+            <span class="kv-label">推しポイント</span>
+            <span class="kv-value">
+              ・謎多きフィクサー！サーガの裏側で暗躍する組織「ピアネーザ」のトップとして、底知れぬ実力を感じさせる。<br />
+              ・フルートの音色と共に現れる演出がキザでカッコいい🎶
+            </span>
+          </p>
+        </article>
+
+        <!-- ▼ ナカリー・プレム -->
+        <article
+          class="char-card"
+          data-name="ナカリー・プレム"
+          data-works="A-EP4"
+          data-tags="タラヴァー"
+        >
+          <h2 class="char-name">
+            ナカリー・プレム
+            <span class="char-name-sub">（アークの弟子 / 共和国派指揮官補佐）</span>
+          </h2>
+          <p class="kv-row">
+            <span class="kv-label">登場作品</span>
+            <span class="kv-value">アビバーヴァク共和国物語 A-EP4</span>
+          </p>
+          <div class="char-tags kv-row">
+            <span class="kv-label">タグ</span>
+            <div class="kv-value">
+              <button class="tag-pill" type="button" data-tag="タラヴァー">タラヴァー</button>
+            </div>
+          </div>
+          <p class="char-summary">
+            <span class="kv-label">概要</span>
+            <span class="kv-value">
+              アークの一番弟子。カーヌーンを支える側近だが、彼女が狂気に染まっていく姿に心を痛める。A-EP4にて、キュビの虐殺により祖母や仲間を失い、それでも戦いを止めないカーヌーンを「救う」ために、彼女を撃つ決断をする。
+            </span>
+          </p>
+          <p class="char-quote">
+            <span class="kv-label">名言</span>
+            <span class="kv-value">
+              <span class="quote-mark">「</span>
+              <span class="quote-text">さようなら、魔女</span>
+              <span class="quote-mark">」</span>
+            </span>
+          </p>
+          <p class="char-oshii">
+            <span class="kv-label">推しポイント</span>
+            <span class="kv-value">
+              ・一番辛い役回りを引き受けた忠臣…😭<br />
+              ・彼がカーヌーンを撃ったのは、裏切りではなく最大の「愛」と「救済」だったと信じたい。サーガ屈指の鬱クラマックスの立役者。
+            </span>
+          </p>
+        </article>
+
+        <!-- ==================== スピンオフ（ブックキーパー / 五天まわり 他） ==================== -->
+
+        <!-- ▼ アーシャ・プリティヴィティ -->
+        <article
+          class="char-card"
+          data-name="アーシャ・プリティヴィティ"
+          data-works="ブックキーパー, EP'99"
+          data-tags="五天"
+        >
+          <h2 class="char-name">
+            アーシャ・プリティヴィティ
+            <span class="char-name-sub">（紫天 / ラバクーダ社CEO）</span>
+          </h2>
+          <p class="kv-row">
+            <span class="kv-label">登場作品</span>
+            <span class="kv-value">ブックキーパー / カラバァタン共和国物語 EP'99 他</span>
+          </p>
+          <div class="char-tags kv-row">
+            <span class="kv-label">タグ</span>
+            <div class="kv-value">
+              <button class="tag-pill" type="button" data-tag="五天">五天</button>
+            </div>
+          </div>
+          <p class="char-summary">
+            <span class="kv-label">概要</span>
+            <span class="kv-value">
+              五天の幹部「紫天」。ウォールのIT・化学繊維企業「ラバクーダ」のCEOにして、登録者100万人越えのストリーマー。物事を「複式簿記」で捉える商魂逞しい人物だが、根は重度のオタク。大学時代の先輩であるティアナ（白珞会）を崇拝している。コトとは凸凹コンビ。
+            </span>
+          </p>
+          <p class="char-quote">
+            <span class="kv-label">名言</span>
+            <span class="kv-value">
+              <span class="quote-mark">「</span>
+              <span class="quote-text">これこそ『複式簿記』ですわ！</span>
+              <span class="quote-mark">」</span>
+            </span>
+          </p>
+          <p class="char-oshii">
+            <span class="kv-label">推しポイント</span>
+            <span class="kv-value">
+              ・有能な経営者でありながら、推し（ティアナ）の前ではIQが下がる残念な美人ぶりが最高💜<br />
+              ・コトの暴走を（物理や金で）止める苦労人ポジション。彼女がいるから五天の経済は回っている。<br />
+              ・「ですわ」口調とゲーマー気質のギャップが可愛い。
+            </span>
+          </p>
+        </article>
+
+        <!-- ▼ チサ・テイル・コロン -->
+        <article
+          class="char-card"
+          data-name="チサ・テイル・コロン"
+          data-works="ブックキーパー"
+          data-tags="市民"
+        >
+          <h2 class="char-name">
+            チサ・テイル・コロン
+            <span class="char-name-sub">（アルモナの歌姫 / ネット時代の寵児）</span>
+          </h2>
+          <p class="kv-row">
+            <span class="kv-label">登場作品</span>
+            <span class="kv-value">ブックキーパー EP2</span>
+          </p>
+          <div class="char-tags kv-row">
+            <span class="kv-label">タグ</span>
+            <div class="kv-value">
+              <button class="tag-pill" type="button" data-tag="市民">市民</button>
+            </div>
+          </div>
+          <p class="char-summary">
+            <span class="kv-label">概要</span>
+            <span class="kv-value">
+              アルモナ出身のシンガーソングライター。ウォール育ちで、既存の音楽業界の慣習を打ち破りネット配信で成功した。アーシャの「推し」の一人。ラバクーダ社とのスポンサー契約交渉において、競合他社（白珞会）をチラつかせて無条件での契約を勝ち取るなど、したたかな一面を持つ。
+            </span>
+          </p>
+          <p class="char-quote">
+            <span class="kv-label">名言</span>
+            <span class="kv-value">
+              <span class="quote-mark">「</span>
+              <span class="quote-text">わたしは、いまの気持ちのままに歌を歌いたい</span>
+              <span class="quote-mark">」</span>
+            </span>
+          </p>
+          <p class="char-oshii">
+            <span class="kv-label">推しポイント</span>
+            <span class="kv-value">
+              ・アーティストとしての矜持と、ビジネスにおける駆け引きの強さを併せ持つ「ウォール仕込み」の博打打ち。<br />
+              ・アーシャを掌で転がす大物っぷりが痛快！コトに「いかれている」と言わしめるほどの度胸の持ち主。
+            </span>
+          </p>
+        </article>
+
+        <!-- ▼ ティアナ・メリエン -->
+        <article
+          class="char-card"
+          data-name="ティアナ・メリエン"
+          data-works="ブックキーパー"
+          data-tags="白珞会"
+        >
+          <h2 class="char-name">
+            ティアナ・メリエン
+            <span class="char-name-sub">（白珞会首領 / アーシャの憧れ）</span>
+          </h2>
+          <p class="kv-row">
+            <span class="kv-label">登場作品</span>
+            <span class="kv-value">ブックキーパー EP3</span>
+          </p>
+          <div class="char-tags kv-row">
+            <span class="kv-label">タグ</span>
+            <div class="kv-value">
+              <button class="tag-pill" type="button" data-tag="白珞会">白珞会</button>
+            </div>
+          </div>
+          <p class="char-summary">
+            <span class="kv-label">概要</span>
+            <span class="kv-value">
+              アパレル企業「エニミューツ社」社長にして、マフィア「白珞会」のトップ。アーシャの大学時代の後輩で、彼女から一方的に愛されている。コトによる心理テスト（間取り図）では、心のガードが堅く、他者を踏み込ませないマキャベリストとしての本性が示唆された。
+            </span>
+          </p>
+          <p class="char-quote">
+            <span class="kv-label">名言</span>
+            <span class="kv-value">
+              <span class="quote-mark">「</span>
+              <span class="quote-text">先輩は本当に特別な友人なんです</span>
+              <span class="quote-mark">」</span>
+            </span>
+          </p>
+          <p class="char-oshii">
+            <span class="kv-label">推しポイント</span>
+            <span class="kv-value">
+              ・底知れないミステリアスな美女。アーシャを利用しているのか、本当に慕っているのか…その真意が読めないところが魅力。<br />
+              ・コトとの腹の探り合いの緊張感がたまらない。
+            </span>
+          </p>
+        </article>
+
+        <!-- ▼ ブムィトヌケ -->
+        <article
+          class="char-card"
+          data-name="ブムィトヌケ"
+          data-works="ブックキーパー"
+          data-tags="市民"
+        >
+          <h2 class="char-name">
+            ブムィトヌケ
+            <span class="char-name-sub">（スクニューネの特撮ヒーロー）</span>
+          </h2>
+          <p class="kv-row">
+            <span class="kv-label">登場作品</span>
+            <span class="kv-value">ブックキーパー EP4</span>
+          </p>
+          <div class="char-tags kv-row">
+            <span class="kv-label">タグ</span>
+            <div class="kv-value">
+              <button class="tag-pill" type="button" data-tag="市民">市民</button>
+            </div>
+          </div>
+          <p class="char-summary">
+            <span class="kv-label">概要</span>
+            <span class="kv-value">
+              スクニューネの特撮番組の主人公（のスーツアクター）。タヌキの戦士。「異種剣術大会」に参加し、コトとファタの殺し合いのような決闘に巻き込まれる。二人が相打ち寸前になったその時、空気と化していた彼が「タイフフラベ」で二人を同時に倒し、優勝をさらった。
+            </span>
+          </p>
+          <p class="char-quote">
+            <span class="kv-label">名言</span>
+            <span class="kv-value">
+              <span class="quote-mark">「</span>
+              <span class="quote-text">あの、おれもいるんですが</span>
+              <span class="quote-mark">」</span>
+            </span>
+          </p>
+          <p class="char-oshii">
+            <span class="kv-label">推しポイント</span>
+            <span class="kv-value">
+              ・最強の一般人（中の人）。殺気渦巻く中で唯一冷静に「試合」を全うしたプロフェッショナル✨<br />
+              ・シリアスな展開をギャグで強制終了させる力技が、スピンオフならではの面白さ。
+            </span>
+          </p>
+        </article>
+
+        <!-- ▼ アルカ・"ラティア"・メルドゥーク -->
+        <article
+          class="char-card"
+          data-name="アルカ・ラティア・メルドゥーク"
+          data-works="H-EP10, H-EP11, EP'99"
+          data-tags="五天,西アルトス研究会"
+        >
+          <h2 class="char-name">
+            アルカ・"ラティア"・メルドゥーク
+            <span class="char-name-sub">（緋天 / 虚神）</span>
+          </h2>
+          <p class="kv-row">
+            <span class="kv-label">登場作品</span>
+            <span class="kv-value">ハーロピノン共和国物語 / 五天まわり 他</span>
+          </p>
+          <div class="char-tags kv-row">
+            <span class="kv-label">タグ</span>
+            <div class="kv-value">
+              <button class="tag-pill" type="button" data-tag="五天">五天</button>
+              <button class="tag-pill" type="button" data-tag="西アルトス研究会">西アルトス研究会</button>
+            </div>
+          </div>
+          <p class="char-summary">
+            <span class="kv-label">概要</span>
+            <span class="kv-value">
+              五天の絶対的指導者「緋天」。かつてはヘリエン国立大学の学生で、「西アルトス研究会」の創設メンバー。恋人エスティとの悲劇を経て、心の「空虚」を埋めるために裏社会の頂点へ登り詰めた。弁護士資格も持つ天才。カフィレム・ハーガンディとの知的ゲーム（博打）に命を燃やす。
+            </span>
+          </p>
+          <p class="char-quote">
+            <span class="kv-label">名言</span>
+            <span class="kv-value">
+              <span class="quote-mark">「</span>
+              <span class="quote-text">未知に触れて、この空虚が一瞬だけ黙る、その刹那のことだよ</span>
+              <span class="quote-mark">」</span>
+            </span>
+          </p>
+          <p class="char-oshii">
+            <span class="kv-label">推しポイント</span>
+            <span class="kv-value">
+              ・サーガ最大のカリスマ・ヴィラン👑 全てを見透かす緋色の瞳と、圧倒的な虚無感が美しい。<br />
+              ・過去編での不器用な恋と挫折が、現在の彼女の「神性」を形作っていると思うと切ない。<br />
+              ・キルロードとの主従関係、カフィレムとのライバル関係など、関係性の矢印がどれも重くて最高。
+            </span>
+          </p>
+        </article>
+
+        <!-- ▼ キルロード・ドゥビ・セレスティア -->
+        <article
+          class="char-card"
+          data-name="キルロード・ドゥビ・セレスティア"
+          data-works="EP'99, A-EP4"
+          data-tags="五天"
+        >
+          <h2 class="char-name">
+            キルロード・ドゥビ・セレスティア
+            <span class="char-name-sub">（黄天 / 調停役）</span>
+          </h2>
+          <p class="kv-row">
+            <span class="kv-label">登場作品</span>
+            <span class="kv-value">カラバァタン共和国物語 EP'99 / 五天まわり 他</span>
+          </p>
+          <div class="char-tags kv-row">
+            <span class="kv-label">タグ</span>
+            <div class="kv-value">
+              <button class="tag-pill" type="button" data-tag="五天">五天</button>
+            </div>
+          </div>
+          <p class="char-summary">
+            <span class="kv-label">概要</span>
+            <span class="kv-value">
+              五天の幹部「黄天」。デルタイの有力氏族セレスティア家の八男だが、去勢されている。ラティアの右腕として組織の調整役を担う苦労人。ラティアを「我が主」と崇拝し、「傀儡」であることを選んだ。A-EP4にて、暴走するキュビを止めようとして凶弾に倒れる。
+            </span>
+          </p>
+          <p class="char-quote">
+            <span class="kv-label">名言</span>
+            <span class="kv-value">
+              <span class="quote-mark">「</span>
+              <span class="quote-text">傀儡でいいさ。俺らはどこまで行っても主の道具だしな</span>
+              <span class="quote-mark">」</span>
+            </span>
+          </p>
+          <p class="char-oshii">
+            <span class="kv-label">推しポイント</span>
+            <span class="kv-value">
+              ・中間管理職の悲哀を背負った忠臣☕ 胃を痛めながらもラティアに尽くす姿がいじらしい。<br />
+              ・キュビやコトといった狂人たちに振り回されながらも、組織をまとめようとする手腕は本物。<br />
+              ・その最期まで「主の威光」を守ろうとした生き様が泣ける…
+            </span>
+          </p>
+        </article>
+
+        <!-- ▼ キュビ・エイリン -->
+        <article
+          class="char-card"
+          data-name="キュビ・エイリン"
+          data-works="EP'99, コンシーラー, A-EP3, A-EP4"
+          data-tags="五天"
+        >
+          <h2 class="char-name">
+            キュビ・エイリン
+            <span class="char-name-sub">（緑天 / 弾丸）</span>
+          </h2>
+          <p class="kv-row">
+            <span class="kv-label">登場作品</span>
+            <span class="kv-value">カラバァタン共和国物語 EP'99 / 五天まわり / Aシリーズ 他</span>
+          </p>
+          <div class="char-tags kv-row">
+            <span class="kv-label">タグ</span>
+            <div class="kv-value">
+              <button class="tag-pill" type="button" data-tag="五天">五天</button>
+            </div>
+          </div>
+          <p class="char-summary">
+            <span class="kv-label">概要</span>
+            <span class="kv-value">
+              五天の殺し屋。「弾丸」の異名を持つ。女装少年のような外見だが、中身は残虐非道なサイコパス。二丁拳銃「黒月」を操る。Aシリーズでブブマを殺害して「緑天」の座を奪う。ラティアからの簒奪を企む組織の癌にして、最強のジョーカー。
+            </span>
+          </p>
+          <p class="char-quote">
+            <span class="kv-label">名言</span>
+            <span class="kv-value">
+              <span class="quote-mark">「</span>
+              <span class="quote-text">どっかーん⭐︎まいど〜、殺し屋で〜す♡</span>
+              <span class="quote-mark">」</span>
+            </span>
+          </p>
+          <p class="char-oshii">
+            <span class="kv-label">推しポイント</span>
+            <span class="kv-value">
+              ・純粋悪のカリスマ💀 無邪気に人を殺し、組織を掻き回す姿は恐怖そのものだが、その突き抜けた狂気が魅力的。<br />
+              ・「えーりんちゃん」という一人称と残虐行為のギャップがエグい。<br />
+              ・物語をバッドエンド（あるいはカオス）へと導くトリックスターとして、サーガ終盤の重要人物。
+            </span>
+          </p>
+        </article>
+
+        <!-- ==================== クロスボーダー ==================== -->
+
+        <!-- ▼ イアン・マヤ -->
+        <article
+          class="char-card"
+          data-name="イアン・マヤ"
+          data-works="クロスボーダー#1"
+          data-tags="国境警察"
+        >
+          <h2 class="char-name">
+            イアン・マヤ
+            <span class="char-name-sub">（カラベイ国境警察巡査）</span>
+          </h2>
+          <p class="kv-row">
+            <span class="kv-label">登場作品</span>
+            <span class="kv-value">クロスボーダー#1</span>
+          </p>
+          <div class="char-tags kv-row">
+            <span class="kv-label">タグ</span>
+            <div class="kv-value">
+              <button class="tag-pill" type="button" data-tag="国境警察">国境警察</button>
+            </div>
+          </div>
+          <p class="char-summary">
+            <span class="kv-label">概要</span>
+            <span class="kv-value">
+              カラベイ・デルタイ国境検問所の巡査。デルタイ側のキリ巡査とは国境を挟んだ悪友。フェンス越しにビールを投げ合う仲。九地のガケイを「チャンバラの先生」と煽るなど、飄々とした性格。ミナラ・ジラーチスの奇妙な「越境出前」に対応する。
+            </span>
+          </p>
+          <p class="char-quote">
+            <span class="kv-label">名言</span>
+            <span class="kv-value">
+              <span class="quote-mark">「</span>
+              <span class="quote-text">黙れ西ダハル野郎(デルタイの蔑称)</span>
+              <span class="quote-mark">」</span>
+            </span>
+          </p>
+          <p class="char-oshii">
+            <span class="kv-label">推しポイント</span>
+            <span class="kv-value">
+              ・敵対する国同士の警官が仲良しという設定が最高にエモい🍻<br />
+              ・ガケイを軽くあしらう度胸とユーモアのセンスが光る。日常系のような雰囲気の中に、内戦という重い背景があるのが深い。
+            </span>
+          </p>
+        </article>
+
+        <!-- ▼ キリ・ニューノ -->
+        <article
+          class="char-card"
+          data-name="キリ・ニューノ"
+          data-works="クロスボーダー#1"
+          data-tags="国境警察"
+        >
+          <h2 class="char-name">
+            キリ・ニューノ
+            <span class="char-name-sub">（デルタイ国境警察巡査部長）</span>
+          </h2>
+          <p class="kv-row">
+            <span class="kv-label">登場作品</span>
+            <span class="kv-value">クロスボーダー#1</span>
+          </p>
+          <div class="char-tags kv-row">
+            <span class="kv-label">タグ</span>
+            <div class="kv-value">
+              <button class="tag-pill" type="button" data-tag="国境警察">国境警察</button>
+            </div>
+          </div>
+          <p class="char-summary">
+            <span class="kv-label">概要</span>
+            <span class="kv-value">
+              デルタイ側の国境警備隊員。マヤの悪友。仕事をサボってマヤとSNS（タスヴァー）で会話したり、ビールを投げ合ったりしている。「ザル警備」の象徴のような人物だが、それが逆に両国の緩衝材になっているとも言える。
+            </span>
+          </p>
+          <p class="char-quote">
+            <span class="kv-label">名言</span>
+            <span class="kv-value">
+              <span class="quote-mark">「</span>
+              <span class="quote-text">カラバァタン野郎のビールなんて偽物だ。おれが本物のビールを教えてやる</span>
+              <span class="quote-mark">」</span>
+            </span>
+          </p>
+          <p class="char-oshii">
+            <span class="kv-label">推しポイント</span>
+            <span class="kv-value">
+              ・マヤとの軽口の応酬が漫才みたいで楽しい。<br />
+              ・デルタイの内戦が激化する中、彼らの緩い日常がいつまで続くのか…という切なさも感じさせる。
+            </span>
+          </p>
+        </article>
+
+        <!-- ▼ アハサン・タイ -->
+        <article
+          class="char-card"
+          data-name="アハサン・タイ"
+          data-works="クロスボーダー#1"
+          data-tags="国境警察"
+        >
+          <h2 class="char-name">
+            アハサン・タイ
+            <span class="char-name-sub">（カラベイ国境警察巡査部長 / マヤの上司）</span>
+          </h2>
+          <p class="kv-row">
+            <span class="kv-label">登場作品</span>
+            <span class="kv-value">クロスボーダー#1</span>
+          </p>
+          <div class="char-tags kv-row">
+            <span class="kv-label">タグ</span>
+            <div class="kv-value">
+              <button class="tag-pill" type="button" data-tag="国境警察">国境警察</button>
+            </div>
+          </div>
+          <p class="char-summary">
+            <span class="kv-label">概要</span>
+            <span class="kv-value">
+              マヤの上司。かつて五天のファルネドを検挙したこともある名刑事。マヤの悪ふざけを咎めつつも、一緒になって楽しんだり、ガケイとの揉め事を煽ったりするノリの良い人物。ミナラには「ヒガンバナ」のスタンプを押し、粋な計らいを見せた。
+            </span>
+          </p>
+          <p class="char-quote">
+            <span class="kv-label">名言</span>
+            <span class="kv-value">
+              <span class="quote-mark">「</span>
+              <span class="quote-text">いやはや、文化だよこれは</span>
+              <span class="quote-mark">」</span>
+            </span>
+          </p>
+          <p class="char-oshii">
+            <span class="kv-label">推しポイント</span>
+            <span class="kv-value">
+              ・理想の上司！部下を守りつつ、時には一緒に悪ノリするバランス感覚が最高。<br />
+              ・ミナラに対して「また会う日を楽しみに」という花言葉のスタンプを押すシーンがカッコいい🌸
+            </span>
+          </p>
+        </article>
+
+        <!-- ▼ グリアン・ガケイ -->
+        <article
+          class="char-card"
+          data-name="グリアン・ガケイ"
+          data-works="クロスボーダー#1"
+          data-tags="九地,境梟"
+        >
+          <h2 class="char-name">
+            グリアン・ガケイ
+            <span class="char-name-sub">（境梟 / 冗談の通じない男）</span>
+          </h2>
+          <p class="kv-row">
+            <span class="kv-label">登場作品</span>
+            <span class="kv-value">クロスボーダー#1</span>
+          </p>
+          <div class="char-tags kv-row">
+            <span class="kv-label">タグ</span>
+            <div class="kv-value">
+              <button class="tag-pill" type="button" data-tag="九地">九地</button>
+              <button class="tag-pill" type="button" data-tag="境梟">境梟</button>
+            </div>
+          </div>
+          <p class="char-summary">
+            <span class="kv-label">概要</span>
+            <span class="kv-value">
+              九地の隊員。二つ名は「境梟」。国境警備に介入し、マヤたち警察官を「弛んでいる」と批判する堅物。マヤの挑発に乗り、鞘に手をかけるなど短気な一面も。国境警察とは犬猿の仲。
+            </span>
+          </p>
+          <p class="char-quote">
+            <span class="kv-label">名言</span>
+            <span class="kv-value">
+              <span class="quote-mark">「</span>
+              <span class="quote-text">神聖なるデューレイを侮辱するとは何事か！？ここで死にたいなら、そう申せ</span>
+              <span class="quote-mark">」</span>
+            </span>
+          </p>
+          <p class="char-oshii">
+            <span class="kv-label">推しポイント</span>
+            <span class="kv-value">
+              ・マヤにいじられるためだけに存在するような堅物キャラ。<br />
+              ・「境梟」という二つ名の響きはカッコいいのに、扱いが不憫で愛おしい🦉
+            </span>
+          </p>
+        </article>
+
+        <!-- ▼ エン・メイ -->
+        <article
+          class="char-card"
+          data-name="エン・メイ"
+          data-works="クロスボーダー#1"
+          data-tags="国境警察"
+        >
+          <h2 class="char-name">
+            エン・メイ
+            <span class="char-name-sub">（叩き上げの警部 / ネキネイの娘）</span>
+          </h2>
+          <p class="kv-row">
+            <span class="kv-label">登場作品</span>
+            <span class="kv-value">クロスボーダー#1</span>
+          </p>
+          <div class="char-tags kv-row">
+            <span class="kv-label">タグ</span>
+            <div class="kv-value">
+              <button class="tag-pill" type="button" data-tag="国境警察">国境警察</button>
+            </div>
+          </div>
+          <p class="char-summary">
+            <span class="kv-label">概要</span>
+            <span class="kv-value">
+              カラベイ国境警察の警部。エン・ネキネイの娘。母譲りの実力とカリスマ性で、マヤやガケイを一喝して場を収める。「ゾパイタン教区立病院」検挙の功績を持つ叩き上げ。デルタイからの難民の車列を見て、戦況の悪化を冷静に分析する。
+            </span>
+          </p>
+          <p class="char-quote">
+            <span class="kv-label">名言</span>
+            <span class="kv-value">
+              <span class="quote-mark">「</span>
+              <span class="quote-text">その辺にしておけ</span>
+              <span class="quote-mark">」</span>
+            </span>
+          </p>
+          <p class="char-oshii">
+            <span class="kv-label">推しポイント</span>
+            <span class="kv-value">
+              ・あのネキネイの娘！！母譲りの凛とした佇まいと、荒くれ者たちを従える統率力がカッコいい✨<br />
+              ・マヤとタイが即座に土下座するほどの威圧感、流石です。
+            </span>
+          </p>
+        </article>
+
+        <!-- ▼ ミナラ・ジラーチス -->
+        <article
+          class="char-card"
+          data-name="ミナラ・ジラーチス"
+          data-works="クロスボーダー#1"
+          data-tags="市民"
+        >
+          <h2 class="char-name">
+            ミナラ・ジラーチス
+            <span class="char-name-sub">（越境出前の青年）</span>
+          </h2>
+          <p class="kv-row">
+            <span class="kv-label">登場作品</span>
+            <span class="kv-value">クロスボーダー#1</span>
+          </p>
+          <div class="char-tags kv-row">
+            <span class="kv-label">タグ</span>
+            <div class="kv-value">
+              <button class="tag-pill" type="button" data-tag="市民">市民</button>
+            </div>
+          </div>
+          <p class="char-summary">
+            <span class="kv-label">概要</span>
+            <span class="kv-value">
+              バイクで国境を越えてパンの出前にやってきた青年。上司の命令を断れず、戦火のデルタイからカラベイへ配達に来た。「地獄の底まで届けます！」を社訓とするブラック企業勤務。マヤたちに疑われるも、誠実な対応で無事入国（＆出国）を果たす。
+            </span>
+          </p>
+          <p class="char-quote">
+            <span class="kv-label">名言</span>
+            <span class="kv-value">
+              <span class="quote-mark">「</span>
+              <span class="quote-text">うちはエルテーナ産の小麦の使用にこだわっていましてね</span>
+              <span class="quote-mark">」</span>
+            </span>
+          </p>
+          <p class="char-oshii">
+            <span class="kv-label">推しポイント</span>
+            <span class="kv-value">
+              ・戦場をバイクで駆け抜けるパン屋の店員とかいう属性過多な一般人🥐<br />
+              ・あまりにもブラックな職場環境にもめげず、誠実に任務をこなす姿に全労働者が涙する。<br />
+              ・無事に戻ってこれた時の安心感がすごい。
+            </span>
+          </p>
+        </article>
+
+        <!-- ==================== コンシーラー ==================== -->
+
+        <!-- ▼ ヤンク・ガビウン -->
+        <article
+          class="char-card"
+          data-name="ヤンク・ガビウン"
+          data-works="コンシーラー"
+          data-tags="ピアネーザ"
+        >
+          <h2 class="char-name">
+            ヤンク・ガビウン
+            <span class="char-name-sub">（デルタイ警察警部補）</span>
+          </h2>
+          <p class="kv-row">
+            <span class="kv-label">登場作品</span>
+            <span class="kv-value">コンシーラー EP1, EP2</span>
+          </p>
+          <div class="char-tags kv-row">
+            <span class="kv-label">タグ</span>
+            <div class="kv-value">
+              <button class="tag-pill" type="button" data-tag="ピアネーザ">ピアネーザ</button>
+            </div>
+          </div>
+          <p class="char-summary">
+            <span class="kv-label">概要</span>
+            <span class="kv-value">
+              デルタイ警察の警部補。関西弁のような口調で話す。アノマリーオタクのナートにツッコミを入れつつ、現場での捜査を堅実に行う。エアベンの潜入捜査では信者を演じきり、見事な連携でリオを追い詰めた。
+            </span>
+          </p>
+          <p class="char-quote">
+            <span class="kv-label">名言</span>
+            <span class="kv-value">
+              <span class="quote-mark">「</span>
+              <span class="quote-text">これ、鳥獣保護法違反やないかい！</span>
+              <span class="quote-mark">」</span>
+            </span>
+          </p>
+          <p class="char-oshii">
+            <span class="kv-label">推しポイント</span>
+            <span class="kv-value">
+              ・ナートとの凸凹コンビが最高！漫才のような掛け合いが、シリアスな展開の中での清涼剤。<br />
+              ・口は悪いが仕事はできる、現場叩き上げの頼れる刑事。
+            </span>
+          </p>
+        </article>
+
+        <!-- ▼ ナート・ハキム -->
+        <article
+          class="char-card"
+          data-name="ナート・ハキム"
+          data-works="コンシーラー"
+          data-tags="ピアネーザ"
+        >
+          <h2 class="char-name">
+            ナート・ハキム
+            <span class="char-name-sub">（アノマリーオタクの巡査部長）</span>
+          </h2>
+          <p class="kv-row">
+            <span class="kv-label">登場作品</span>
+            <span class="kv-value">コンシーラー EP1, EP2</span>
+          </p>
+          <div class="char-tags kv-row">
+            <span class="kv-label">タグ</span>
+            <div class="kv-value">
+              <button class="tag-pill" type="button" data-tag="ピアネーザ">ピアネーザ</button>
+            </div>
+          </div>
+          <p class="char-summary">
+            <span class="kv-label">概要</span>
+            <span class="kv-value">
+              デルタイ警察の巡査部長。重度の「アノマリー」オタクで、超常現象に対して並々ならぬ興味を持つ。しかし、その知識と観察眼は本物で、エアベン捜査においても重要な役割を果たした。ヤンクの相棒。
+            </span>
+          </p>
+          <p class="char-quote">
+            <span class="kv-label">名言</span>
+            <span class="kv-value">
+              <span class="quote-mark">「</span>
+              <span class="quote-text">大事に扱ってください！ここは『アノマリー』だらけなんですから</span>
+              <span class="quote-mark">」</span>
+            </span>
+          </p>
+          <p class="char-oshii">
+            <span class="kv-label">推しポイント</span>
+            <span class="kv-value">
+              ・オタク特有の早口解説が愛おしい🤓<br />
+              ・「アノマリー」への純粋な好奇心が、時に事件解決の糸口になるのがカッコいい。
+            </span>
+          </p>
+        </article>
+
+        <!-- ▼ エルネア・テイル・マ・ヤビス -->
+        <article
+          class="char-card"
+          data-name="エルネア・テイル・マ・ヤビス"
+          data-works="コンシーラー"
+          data-tags="ピアネーザ"
+        >
+          <h2 class="char-name">
+            エルネア・テイル・マ・ヤビス
+            <span class="char-name-sub">（イェラマン / テンカン第一夫人）</span>
+          </h2>
+          <p class="kv-row">
+            <span class="kv-label">登場作品</span>
+            <span class="kv-value">コンシーラー EP1, EP2</span>
+          </p>
+          <div class="char-tags kv-row">
+            <span class="kv-label">タグ</span>
+            <div class="kv-value">
+              <button class="tag-pill" type="button" data-tag="ピアネーザ">ピアネーザ</button>
+            </div>
+          </div>
+          <p class="char-summary">
+            <span class="kv-label">概要</span>
+            <span class="kv-value">
+              内務省警察局特務課「第五号楽団（ピアネーザ）」の旗手（イェラマン）。その正体はデルタイ国王（テンカン）エルスの第一夫人。超常現象を科学的に解明しようとする合理主義者。エミエの能力を「ただの五感の鋭さ」と評し、彼女を「天使」の呪縛から解き放った。
+            </span>
+          </p>
+          <p class="char-quote">
+            <span class="kv-label">名言</span>
+            <span class="kv-value">
+              <span class="quote-mark">「</span>
+              <span class="quote-text">これが『やましいこと』。エルネア・テイル・マ・ヤビス、テンカン(国王)の第一夫人よ</span>
+              <span class="quote-mark">」</span>
+            </span>
+          </p>
+          <p class="char-oshii">
+            <span class="kv-label">推しポイント</span>
+            <span class="kv-value">
+              ・王妃様が特殊部隊の隊長やってるとか属性過多すぎる👑<br />
+              ・エミエとの「おばさん」「クソガキ」と言い合う関係性が最高に尊い。エミエを学校に通わせようとする母性にもグッとくる。
+            </span>
+          </p>
+        </article>
+
+        <!-- ▼ エミエ -->
+        <article
+          class="char-card"
+          data-name="エミエ"
+          data-works="コンシーラー"
+          data-tags="ピアネーザ"
+        >
+          <h2 class="char-name">
+            エミエ
+            <span class="char-name-sub">（元天使 / サイコメトラー）</span>
+          </h2>
+          <p class="kv-row">
+            <span class="kv-label">登場作品</span>
+            <span class="kv-value">コンシーラー EP1, EP2</span>
+          </p>
+          <div class="char-tags kv-row">
+            <span class="kv-label">タグ</span>
+            <div class="kv-value">
+              <button class="tag-pill" type="button" data-tag="ピアネーザ">ピアネーザ</button>
+            </div>
+          </div>
+          <p class="char-summary">
+            <span class="kv-label">概要</span>
+            <span class="kv-value">
+              カルト教団「エアベン」の象徴として崇められていた少女。鋭い五感と洞察力で人の「やましさ」を見抜く。エルネアにその能力を認められ、ピアネーザに協力。数々のアノマリー事件を解決に導く。「変幻自在の屋敷」事件後、学校へ通うことを希望する。
+            </span>
+          </p>
+          <p class="char-quote">
+            <span class="kv-label">名言</span>
+            <span class="kv-value">
+              <span class="quote-mark">「</span>
+              <span class="quote-text">くどい！わらわに嘘は通じぬ！</span>
+              <span class="quote-mark">」</span>
+            </span>
+          </p>
+          <p class="char-oshii">
+            <span class="kv-label">推しポイント</span>
+            <span class="kv-value">
+              ・「わらわ」口調の幼女先輩！生意気だけど、普通の生活を知らない世間知らずな一面が可愛い。<br />
+              ・エルネアに餌付けされている姿が微笑ましい。<br />
+              ・「天使」という虚構から降りて、ひとりの人間として歩み出す成長物語。
+            </span>
+          </p>
+        </article>
+
+        <!-- ▼ リオ・フオロン -->
+        <article
+          class="char-card"
+          data-name="リオ・フオロン"
+          data-works="コンシーラー"
+          data-tags="五天"
+        >
+          <h2 class="char-name">
+            リオ・フオロン
+            <span class="char-name-sub">（エアベン幹部 / 五天構成員）</span>
+          </h2>
+          <p class="kv-row">
+            <span class="kv-label">登場作品</span>
+            <span class="kv-value">コンシーラー EP1</span>
+          </p>
+          <div class="char-tags kv-row">
+            <span class="kv-label">タグ</span>
+            <div class="kv-value">
+              <button class="tag-pill" type="button" data-tag="五天">五天</button>
+            </div>
+          </div>
+          <p class="char-summary">
+            <span class="kv-label">概要</span>
+            <span class="kv-value">
+              カルト教団「エアベン」の幹部。五天と繋がり、ドーピング剤「モート」を使った人体実験を行っていた。「聖水」と称した塩素ガスと化学反応を利用したトリックで信者を支配していたが、エルネアたちに見破られ逃走。
+            </span>
+          </p>
+          <p class="char-quote">
+            <span class="kv-label">名言</span>
+            <span class="kv-value">
+              <span class="quote-mark">「</span>
+              <span class="quote-text">『腐らない遺体』、さしずめなにかの投薬実験の犠牲者たちだろう</span>
+              <span class="quote-mark">」</span>
+            </span>
+          </p>
+          <p class="char-oshii">
+            <span class="kv-label">推しポイント</span>
+            <span class="kv-value">
+              ・冷徹なインテリ悪役。宗教をビジネスと実験の場としてしか見ていないドライさが怖い。<br />
+              ・ヤンクたちの潜入捜査にしてやられるマヌケな一面も。
+            </span>
+          </p>
+        </article>
+
+        <!-- ▼ マフ・カント・ホログ -->
+        <article
+          class="char-card"
+          data-name="マフ・カント・ホログ"
+          data-works="コンシーラー"
+          data-tags="市民"
+        >
+          <h2 class="char-name">
+            マフ・カント・ホログ
+            <span class="char-name-sub">（ホログ公爵家の息子 / 悲劇の主人公）</span>
+          </h2>
+          <p class="kv-row">
+            <span class="kv-label">登場作品</span>
+            <span class="kv-value">コンシーラー EP2</span>
+          </p>
+          <div class="char-tags kv-row">
+            <span class="kv-label">タグ</span>
+            <div class="kv-value">
+              <button class="tag-pill" type="button" data-tag="市民">市民</button>
+            </div>
+          </div>
+          <p class="char-summary">
+            <span class="kv-label">概要</span>
+            <span class="kv-value">
+              ホログ公爵カインバの息子。「変幻自在の屋敷」の主としてエルネアたちを翻弄するが、その正体は五天からドーピング剤を購入し、氏族連合に横流ししていた裏切り者。キュビ・エイリンに拉致され、シユウの人体実験の被験者となり、廃人として最期を迎えた。
+            </span>
+          </p>
+          <p class="char-quote">
+            <span class="kv-label">名言</span>
+            <span class="kv-value">
+              <span class="quote-mark">「</span>
+              <span class="quote-text">『力技』だとよく分かりましたね</span>
+              <span class="quote-mark">」</span>
+            </span>
+          </p>
+          <p class="char-oshii">
+            <span class="kv-label">推しポイント</span>
+            <span class="kv-value">
+              ・親の七光りで調子に乗ってたら、本物の狂気（キュビ＆シユウ）に遭遇してしまった不運な男。<br />
+              ・シユウに「主人公」と呼ばれながら実験台にされる末路が、あまりにも皮肉でエグい💀
+            </span>
+          </p>
+        </article>
+
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <!-- 好きに書き換えOK -->
+    名鑑の内容・解釈はすべてAIによるものです。原作の描写とズレる場合があります。
+  </footer>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const searchInput = document.getElementById("searchInput");
+    const cardGrid = document.getElementById("cardGrid");
+    const noResults = document.getElementById("noResults");
+    const visibleCountEl = document.getElementById("visibleCount");
+    const totalCountEl = document.getElementById("totalCount");
+
+    // すべてのキャラカード
+    const cards = Array.from(cardGrid.querySelectorAll(".char-card"));
+
+    // 🔍 検索用インデックスを作る
+    const cardSearchIndex = new Map();
+    cards.forEach((card) => {
+      const name = (card.dataset.name || "");
+      const works = (card.dataset.works || "");
+      const tagsAttr = (card.dataset.tags || "");
+
+      // カード内のタグボタンの文字 & data-tag も拾う
+      const tagButtons = Array.from(card.querySelectorAll(".tag-pill"));
+      const tagsFromButtons = tagButtons
+        .map((btn) => (btn.dataset.tag || btn.textContent || ""))
+        .join(" ");
+
+      const bodyText = card.textContent || "";
+
+      const combined = [
+        name,
+        works,
+        tagsAttr,
+        tagsFromButtons,
+        bodyText,
+      ]
+        .join(" ")
+        .toLowerCase();
+
+      cardSearchIndex.set(card, combined);
+    });
+
+    // 総件数を表示
+    totalCountEl.textContent = String(cards.length);
+
+    // ⭐ 実際の検索処理
+    function applySearch() {
+      const rawQuery = (searchInput.value || "").trim().toLowerCase();
+
+      // 空なら全件表示
+      if (!rawQuery) {
+        let visible = 0;
+        cards.forEach((card) => {
+          card.hidden = false;
+          visible++;
+        });
+        visibleCountEl.textContent = String(visible);
+        noResults.hidden = true;
+        return;
+      }
+
+      // スペース区切りで AND 検索
+      const terms = rawQuery.split(/\s+/).filter(Boolean);
+      let visible = 0;
+
+      cards.forEach((card) => {
+        const text = cardSearchIndex.get(card) || "";
+        const matches = terms.every((term) => text.includes(term));
+        card.hidden = !matches;
+        if (matches) visible++;
+      });
+
+      visibleCountEl.textContent = String(visible);
+      noResults.hidden = visible !== 0;
+    }
+
+    // ⏱ 入力のたびに検索
+    searchInput.addEventListener("input", applySearch);
+
+    // 🏷 タグクリックでそのタグを検索欄にセットして検索
+    cardGrid.addEventListener("click", (event) => {
+      const target = event.target;
+      if (!(target instanceof Element)) return;
+
+      // 内側の要素をクリックしても拾えるように closest を使う
+      const pill = target.closest(".tag-pill");
+      if (!pill) return;
+
+      const tag = pill.dataset.tag || pill.textContent || "";
+      if (!tag) return;
+
+      searchInput.value = tag;
+      applySearch();
+      searchInput.focus();
+    });
+
+    // 初期状態：全件表示
+    applySearch();
+  });
+</script>
+
+</body>
+</html>
